@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Android Flash Light App</string>
+
+    <string name="admob_ID">ca-app-pub-4339054362627963~1501764371</string>
+    <string name="abmod_UNITID">ca-app-pub-4339054362627963/8697728111</string>
+
+    <string name="flash_head_button_text"> Add Flash Head</string>
+
+    <string name="add_flash_head">Add flash head</string>
+
+    <string-array name="myarray">
+        <item>onkar</item>
+        <item>kalppavriksha</item>
+    </string-array>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+</resources>
