@@ -49,15 +49,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setFullScreen();
         setTranslucentNavigation();
+        setHidingNavigationBar();
 
 
-        button=(Button)findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                initChathead();
-            }
-        });
 
         ActivityCompat.requestPermissions(MainActivity.this,
                 new String[]{Manifest.permission.CAMERA,Manifest.permission.INTERNET},
@@ -98,6 +92,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void init()
     {
+        button=(Button)findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initChathead();
+            }
+        });
+
 
         //experiment
 //
@@ -296,8 +298,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    public void setHidingNavigationBar(){
 
-    public void MyAlertDialog()
+        getWindow().getDecorView().setSystemUiVisibility(  View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+
+    }
+
+
+
+    public void MyAlertWindow()
     {
         AlertDialog.Builder builder=new AlertDialog.Builder(this);
         builder.setTitle("Attention");
@@ -315,6 +329,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setHidingNavigationBar();
     }
 }
 

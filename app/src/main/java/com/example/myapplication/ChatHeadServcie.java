@@ -52,6 +52,7 @@ public class ChatHeadServcie extends Service {
 //                PixelFormat.TRANSLUCENT
 //        );
 
+
         int LAYOUT_FLAG;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
