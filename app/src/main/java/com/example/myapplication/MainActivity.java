@@ -1,11 +1,13 @@
 package com.example.myapplication;
 
 import android.Manifest;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.hardware.camera2.CameraManager;
 import android.net.Uri;
@@ -28,6 +30,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.myapplication.Utilities.CustomButton;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -39,7 +42,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String cameraId = null;
     boolean isOpen=false;
     private static final int CODE_DRAW_OVER_OTHER_APP_PERMISSION = 2084;
-    Button button;
+    CustomButton button;
+    CoordinatorLayout mainFrame;
 
 
     @Override
@@ -60,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initAdMob();
 
         init();
+        backgroundGradientAnimation();
 
 
     }
@@ -92,7 +97,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void init()
     {
-        button=(Button)findViewById(R.id.button);
+
+        mainFrame=(CoordinatorLayout)findViewById(R.id.parent_layout);
+
+        button=(CustomButton)findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -336,6 +344,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onResume() {
         super.onResume();
         setHidingNavigationBar();
+    }
+
+    public void backgroundGradientAnimation(){
+
+        AnimationDrawable animationDrawable = (AnimationDrawable) mainFrame.getBackground();
+        animationDrawable.setEnterFadeDuration(4000);
+        animationDrawable.setExitFadeDuration(4000);
+        animationDrawable.start();
+
+
+
+
     }
 }
 

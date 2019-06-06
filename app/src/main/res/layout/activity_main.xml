@@ -9,7 +9,7 @@
         android:id="@+id/parent_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/gradient"
+        android:background="@drawable/background_gradient_animation"
         tools:context=".MainActivity"
         android:layout_above="@+id/adView">
 
@@ -48,7 +48,7 @@
             />
 
 
-        <Button
+        <com.example.myapplication.Utilities.CustomButton
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,7 +58,10 @@
             android:background="@android:color/transparent"
             android:text="@string/add_flash_head"
             android:textAllCaps="false"
-            android:foreground="?attr/selectableItemBackground"/>
+            android:textSize="35dp"
+            android:foreground="?attr/selectableItemBackground"
+            />
+
 
     </android.support.design.widget.CoordinatorLayout>
 
