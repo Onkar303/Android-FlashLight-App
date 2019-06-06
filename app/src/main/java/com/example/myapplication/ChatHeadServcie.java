@@ -34,28 +34,48 @@ public class ChatHeadServcie extends Service {
 
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint({"ClickableViewAccessibility", "InflateParams"})
     @Override
     public void onCreate() {
         super.onCreate();
 
         mChatHeadView=LayoutInflater.from(this).inflate(R.layout.chatheadlayout,null);
 
-        final WindowManager.LayoutParams params=new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.TYPE_PHONE,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                PixelFormat.TRANSLUCENT
-        );
 
 
-        params.gravity= Gravity.TOP|Gravity.LEFT;
+
+//        final WindowManager.LayoutParams params=new WindowManager.LayoutParams(
+//                WindowManager.LayoutParams.WRAP_CONTENT,
+//                WindowManager.LayoutParams.WRAP_CONTENT,
+//                WindowManager.LayoutParams.TYPE_PHONE,
+//                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+//                PixelFormat.TRANSLUCENT
+//        );
+
+        int LAYOUT_FLAG;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        } else {
+            LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_PHONE;
+        }
+
+        final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                LAYOUT_FLAG,
+                 WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                PixelFormat.TRANSLUCENT);
+
+
+        params.gravity= Gravity.TOP;
         params.x=0;
         params.y=100;
 
         windowManager=(WindowManager)getSystemService(Context.WINDOW_SERVICE);
+
         windowManager.addView(mChatHeadView, params);
+
+
 
         Button fab=(Button)mChatHeadView.findViewById(R.id.fab);
         fab.setOnTouchListener(new View.OnTouchListener() {
