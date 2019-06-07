@@ -59,7 +59,7 @@
             android:text="@string/add_flash_head"
             android:textAllCaps="false"
             android:textSize="35dp"
-            android:foreground="?attr/selectableItemBackground"
+            android:foreground="@drawable/button_custom_ripple"
             />
 
 

@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -293,14 +294,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == CODE_DRAW_OVER_OTHER_APP_PERMISSION) {
 
             //Check if the permission is granted or not.
-            if (resultCode == RESULT_OK) {
-                initializeView();
-            } else { //Permission is not available
-                Toast.makeText(this,
-                        "Draw over other app permission not available. Closing the application",
-                        Toast.LENGTH_LONG ).show();
-                finish();
+            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M)
+            {
+                if (Settings.canDrawOverlays(this)) {
+                    initializeView();
+                } else { //Permission is not available
+                    Toast.makeText(this,
+                            getResources().getString(R.string.overlay_grant_permission),
+                            Toast.LENGTH_LONG ).show();
+
+                }
             }
+
+
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
@@ -353,9 +359,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
 
+    }
 
-
-
+    @Override
+    public void onBackPressed() {
+        setResult(Activity.RESULT_OK);
+        finish();
     }
 }
 
