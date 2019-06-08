@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background_gradient_animation"
-        tools:context=".MainActivity"
+        tools:context="project.july2019.androidflashlight.MainActivity"
         android:layout_above="@+id/adView">
 
         <android.support.design.widget.FloatingActionButton
@@ -48,7 +48,7 @@
             />
 
 
-        <com.example.myapplication.Utilities.CustomButton
+        <project.july2019.androidflashlight.Utilities.CustomButton
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package project.july2019.androidflashlight;
 
 import org.junit.Test;
 

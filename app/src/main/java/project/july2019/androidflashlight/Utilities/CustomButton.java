@@ -1,11 +1,10 @@
-package com.example.myapplication.Utilities;
+package project.july2019.androidflashlight.Utilities;
 
 
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
 public class CustomButton extends AppCompatButton {

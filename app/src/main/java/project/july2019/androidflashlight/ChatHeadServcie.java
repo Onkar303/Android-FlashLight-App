@@ -1,16 +1,14 @@
-package com.example.myapplication;
+package project.july2019.androidflashlight;
 
 import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.graphics.PixelFormat;
 import android.hardware.camera2.CameraManager;
 import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,7 +17,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
+
+import com.example.androidflashlight.R;
 
 import static android.content.ContentValues.TAG;
 

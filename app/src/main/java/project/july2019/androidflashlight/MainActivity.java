@@ -1,7 +1,6 @@
-package com.example.myapplication;
+package project.july2019.androidflashlight;
 
 import android.Manifest;
-import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -9,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.GradientDrawable;
 import android.hardware.camera2.CameraManager;
 import android.net.Uri;
 import android.os.Build;
@@ -20,7 +18,6 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,15 +25,16 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.myapplication.Utilities.CustomButton;
+import com.example.androidflashlight.R;
+
+import project.july2019.androidflashlight.Utilities.CustomButton;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class   MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     FloatingActionButton mainButton,leftOffButton,rightOnButton;
     CameraManager camManager;

@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package project.july2019.androidflashlight;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
