@@ -21,6 +21,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -29,6 +32,7 @@ import android.widget.Toast;
 
 import com.example.androidflashlight.R;
 
+import project.july2019.androidflashlight.Animations.ButtonAnimations;
 import project.july2019.androidflashlight.Utilities.CustomButton;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -43,6 +47,8 @@ public class   MainActivity extends AppCompatActivity implements View.OnClickLis
     private static final int CODE_DRAW_OVER_OTHER_APP_PERMISSION = 2084;
     CustomButton button;
     CoordinatorLayout mainFrame;
+    boolean isOn=false;
+    ButtonAnimations buttonAnimations;
 
 
     @Override
@@ -63,8 +69,6 @@ public class   MainActivity extends AppCompatActivity implements View.OnClickLis
         initAdMob();
 
         init();
-        backgroundGradientAnimation();
-
 
     }
 
@@ -97,6 +101,18 @@ public class   MainActivity extends AppCompatActivity implements View.OnClickLis
     public void init()
     {
 
+         buttonAnimations=new ButtonAnimations();
+
+
+        Toolbar toolbar=(Toolbar)findViewById(R.id.action_bar);
+        setSupportActionBar(toolbar);
+        try{
+            getSupportActionBar().setTitle("");
+        }catch (NullPointerException e)
+        {
+            e.printStackTrace();
+        }
+
         mainFrame=(CoordinatorLayout)findViewById(R.id.parent_layout);
 
         button=(CustomButton)findViewById(R.id.button);
@@ -124,15 +140,7 @@ public class   MainActivity extends AppCompatActivity implements View.OnClickLis
 
         mainButton=(FloatingActionButton)findViewById(R.id.mainButton);
 
-        leftOffButton=(FloatingActionButton)findViewById(R.id.leftOfButton);
-
-
-        rightOnButton=(FloatingActionButton)findViewById(R.id.rightOnButton);
-
-
         mainButton.setOnClickListener(this);
-        leftOffButton.setOnClickListener(this);
-        rightOnButton.setOnClickListener(this);
 
     }
 
@@ -142,17 +150,9 @@ public class   MainActivity extends AppCompatActivity implements View.OnClickLis
         switch(v.getId())
         {
             case R.id.mainButton:
-                showButton();
+                doFlash();
+                buttonAnimations.buttonScaleAnimation(this,mainButton);
                 break;
-
-            case R.id.rightOnButton:
-                startFlash();
-                break;
-
-            case R.id.leftOfButton:
-                endFlash();
-                break;
-
         }
     }
 
@@ -181,67 +181,31 @@ public class   MainActivity extends AppCompatActivity implements View.OnClickLis
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void startFlash() {
-        try {
-            cameraId = camManager.getCameraIdList()[0];
-            camManager.setTorchMode(cameraId, true);
-        } catch (Exception e) {
+    public void doFlash() {
 
-            e.printStackTrace();
-        }
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    public void endFlash(){
-
-        try{
-            cameraId = camManager.getCameraIdList()[0];
-            camManager.setTorchMode(cameraId, false);
-        }catch (Exception e)
+        if(!isOn)
         {
-          e.printStackTrace();
-        }
+            try {
+                cameraId = camManager.getCameraIdList()[0];
+                camManager.setTorchMode(cameraId, true);
+            } catch (Exception e) {
 
-    }
-
-    @SuppressLint("RestrictedApi")
-    public void showButton()
-    {
-
-        if(!isOpen)
-        {
-            Animation rightopenanimation = AnimationUtils.loadAnimation(this,R.anim.rightfadein);
-            rightopenanimation.setDuration(100);
-
-            Animation leftopenanimation = AnimationUtils.loadAnimation(this,R.anim.leftfadein);
-            leftopenanimation.setDuration(100);
-
-            rightOnButton.startAnimation(rightopenanimation);
-            leftOffButton.startAnimation(leftopenanimation);
-
-
-            rightOnButton.setVisibility(View.VISIBLE);
-            leftOffButton.setVisibility(View.VISIBLE);
-
-            isOpen=true;
+                e.printStackTrace();
+            }
+            isOn=true;
         }
         else
         {
-            Animation rightcloseanimation = AnimationUtils.loadAnimation(this,R.anim.rightfadeout);
-            rightcloseanimation.setDuration(100);
 
-            Animation leftcloseanimation = AnimationUtils.loadAnimation(this,R.anim.leftfadeout);
-            leftcloseanimation.setDuration(100);
-
-            rightOnButton.startAnimation(rightcloseanimation);
-            leftOffButton.startAnimation(leftcloseanimation);
-
-            rightOnButton.setVisibility(View.GONE);
-            leftOffButton.setVisibility(View.GONE);
-            isOpen=false;
+            try{
+                cameraId = camManager.getCameraIdList()[0];
+                camManager.setTorchMode(cameraId, false);
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            isOn=false;
         }
-
-
 
     }
 
@@ -282,7 +246,6 @@ public class   MainActivity extends AppCompatActivity implements View.OnClickLis
     public void setTranslucentNavigation()
     {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-
 
     }
 
@@ -350,19 +313,19 @@ public class   MainActivity extends AppCompatActivity implements View.OnClickLis
         setHidingNavigationBar();
     }
 
-    public void backgroundGradientAnimation(){
 
-        AnimationDrawable animationDrawable = (AnimationDrawable) mainFrame.getBackground();
-        animationDrawable.setEnterFadeDuration(4000);
-        animationDrawable.setExitFadeDuration(4000);
-        animationDrawable.start();
-
-    }
 
     @Override
     public void onBackPressed() {
         setResult(Activity.RESULT_OK);
         finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.menu,menu);
+        return true;
     }
 }
 

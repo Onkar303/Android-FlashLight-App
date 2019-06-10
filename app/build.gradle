@@ -6,8 +6,8 @@ android {
         applicationId "project.july2019.androidflashlight"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 2
-        versionName "1.0"
+        versionCode 3
+        versionName "1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

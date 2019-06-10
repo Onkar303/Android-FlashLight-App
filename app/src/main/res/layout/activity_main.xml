@@ -5,13 +5,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/parent_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background_gradient_animation"
+        android:background="@color/dark_color"
         tools:context="project.july2019.androidflashlight.MainActivity"
         android:layout_above="@+id/adView">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:elevation="0dp">
+
+            <android.support.v7.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:id="@+id/action_bar"
+
+                android:background="@color/dark_color">
+
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+
+        <View
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:background="@drawable/round_background2"
+            android:elevation="5dp"
+            android:alpha="0.4"
+            android:layout_gravity="center"/>
+
+        <View
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:background="@drawable/round_background1"
+            android:alpha="0.6"
+            android:layout_gravity="center"
+            android:elevation="5dp"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/mainButton"
@@ -22,29 +54,6 @@
             android:src="@drawable/power"
             app:fabCustomSize="90dp"
             app:maxImageSize="50dp"
-
-            />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/leftOfButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="40dp"
-            android:src="@drawable/flashlight_close"
-            android:visibility="invisible"
-
-            />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/rightOnButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|right"
-            android:layout_marginRight="40dp"
-            android:src="@drawable/flashlight"
-            android:visibility="invisible"
-
             />
 
 
@@ -75,6 +84,6 @@
         android:layout_centerHorizontal="true"
         ads:adSize="BANNER"
         ads:adUnitId="@string/abmod_UNITID"
-        android:background="@android:color/holo_blue_dark"/>
+        />
 
 </RelativeLayout>
