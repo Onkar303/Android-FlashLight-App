@@ -30,6 +30,7 @@
                     android:title="Share" />
                 <item
                     android:id="@+id/remove_ads"
+                    android:icon="@drawable/purchase"
                     android:title="Remove Ads" />
                 <item
                     android:id="@+id/reset"

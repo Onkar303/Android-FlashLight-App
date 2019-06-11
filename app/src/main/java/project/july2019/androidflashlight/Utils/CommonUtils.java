@@ -4,9 +4,12 @@ package project.july2019.androidflashlight.Utils;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.androidflashlight.R;
@@ -60,6 +63,38 @@ public class CommonUtils {
 
     public static void setTranslucentNavigation(Window window) {
         window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+
+    }
+
+    public static void exitAlertPopUp(final Context context, String title, String message)
+    {
+        AlertDialog.Builder builder=new AlertDialog.Builder(context);
+        View v= LayoutInflater.from(context).inflate(R.layout.alert_dialog_layout,null);
+        TextView message_text=v.findViewById(R.id.message);
+        TextView title_text=v.findViewById(R.id.title);
+        Button button_yes=v.findViewById(R.id.button_yes);
+        Button button_no=v.findViewById(R.id.button_no);
+        message_text.setText(message);
+        title_text.setText(title);
+        builder.setView(v);
+        final AlertDialog alertDialog=builder.create();
+        alertDialog.getWindow().setWindowAnimations(R.style.AppTheme);
+        alertDialog.getWindow().setBackgroundDrawable(context.getResources().getDrawable(R.drawable.aler_dialog_background));
+        alertDialog.show();
+
+        button_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        button_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
 
     }
 

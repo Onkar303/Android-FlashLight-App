@@ -2,13 +2,10 @@ package project.july2019.androidflashlight;
 
 import android.Manifest;
 import android.animation.AnimatorSet;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.AnimationDrawable;
 import android.hardware.camera2.CameraManager;
 import android.net.Uri;
 import android.os.Build;
@@ -23,18 +20,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.androidflashlight.R;
@@ -57,17 +48,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     CoordinatorLayout mainFrame;
     boolean isOn = false;
     ButtonAnimations buttonAnimations;
-    View outerView, innerView;
+    View outerView;
     NavigationView navigationView;
     DrawerLayout drawer;
     ActionBarDrawerToggle toggle;
     AnimatorSet animatorSet;
+    TextView flash_status;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         CommonUtils.setFullScreen(getWindow());
         CommonUtils.setTranslucentNavigation(getWindow());
@@ -110,9 +103,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void init() {
 
+        flash_status=findViewById(R.id.flash_status);
+        flash_status.setText("Off");
         buttonAnimations = new ButtonAnimations();
         outerView = findViewById(R.id.outer_view);
-        innerView = findViewById(R.id.inner_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
         setSupportActionBar(toolbar);
         try {
@@ -140,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         drawer.addDrawerListener(toggle);
 
         toggle.syncState();
-        animatorSet=ButtonAnimations.rippleAnimation(innerView,outerView);
+        animatorSet=ButtonAnimations.rippleAnimation(outerView);
 
     }
 
@@ -165,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 cameraId = camManager.getCameraIdList()[0];
                 camManager.setTorchMode(cameraId, true);
                 animatorSet.start();
+                flash_status.setText("On");
             } catch (Exception e) {
 
                 e.printStackTrace();
@@ -176,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 cameraId = camManager.getCameraIdList()[0];
                 camManager.setTorchMode(cameraId, false);
                 animatorSet.end();
+                flash_status.setText("Off");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -257,7 +253,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch(menuItem.getItemId())
         {
             case R.id.addflash_head:
-
                   initFlashHead();
                   return true;
 
@@ -282,7 +277,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
 
             case R.id.exit:
-                finish();
+                CommonUtils.exitAlertPopUp(this,"Do you want to exit?","");
                 return true;
         }
 

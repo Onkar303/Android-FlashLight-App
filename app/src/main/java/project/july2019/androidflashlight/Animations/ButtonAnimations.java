@@ -25,7 +25,7 @@ public class ButtonAnimations {
 
     }
 
-    public static AnimatorSet rippleAnimation(View v1,View v2) {
+    public static AnimatorSet rippleAnimation(View v2) {
 
         AnimatorSet animatorSet = new AnimatorSet();
 

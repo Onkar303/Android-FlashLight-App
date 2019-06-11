@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="15dp"
+    android:background="@drawable/aler_dialog_background">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/title"
+        android:textSize="15dp"
+        android:text="Title"
+        android:textColor="@color/colorAccent"
+        android:layout_margin="10dp"
+
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/message"
+        android:text="message"
+        android:textColor="@color/colorAccent"
+        android:layout_below="@+id/title"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/message"
+        android:text="Yes"
+        android:textColor="@color/colorAccent"
+        android:background="@android:color/transparent"
+        android:id="@+id/button_yes"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/button_yes"
+        android:layout_below="@+id/message"
+        android:id="@+id/button_no"
+        android:background="@android:color/transparent"
+        android:text="No"
+        android:textColor="@color/colorAccent"/>
+
+</RelativeLayout>

@@ -42,15 +42,6 @@
             android:layout_gravity="center"
             android:id="@+id/outer_view"/>
 
-        <View
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:background="@drawable/round_background1"
-            android:alpha="0.6"
-            android:layout_gravity="center"
-            android:elevation="5dp"
-            android:id="@+id/inner_view"
-            android:visibility="gone" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/mainButton"
@@ -62,6 +53,19 @@
             app:fabCustomSize="90dp"
             app:maxImageSize="50dp"
             />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Flash_status"
+            android:textColor="@color/colorAccent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="180dp"
+            android:id="@+id/flash_status"
+            android:textSize="18dp"
+            android:textAllCaps="true"
+            android:visibility="invisible"/>
 
 
 
