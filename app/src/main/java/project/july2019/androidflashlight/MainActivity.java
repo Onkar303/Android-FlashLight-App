@@ -1,6 +1,7 @@
 package project.july2019.androidflashlight;
 
 import android.Manifest;
+import android.animation.AnimatorSet;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -19,6 +20,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     NavigationView navigationView;
     DrawerLayout drawer;
     ActionBarDrawerToggle toggle;
-
+    AnimatorSet animatorSet;
 
 
     @Override
@@ -138,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         drawer.addDrawerListener(toggle);
 
         toggle.syncState();
+        animatorSet=ButtonAnimations.rippleAnimation(innerView,outerView);
 
     }
 
@@ -147,33 +150,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.mainButton:
                 doFlash();
-                buttonAnimations.buttonScaleAnimation(this, mainButton);
-                buttonAnimations.buttonScaleAnimation(this,innerView);
-                buttonAnimations.buttonScaleAnimation(this,outerView);
+
+
                 break;
         }
-    }
-
-
-    public void MyToast(String message) {
-
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    public void ErrorAlert(String errorMessage) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Error");
-        builder.setMessage(errorMessage);
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 
 
@@ -184,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             try {
                 cameraId = camManager.getCameraIdList()[0];
                 camManager.setTorchMode(cameraId, true);
+                animatorSet.start();
             } catch (Exception e) {
 
                 e.printStackTrace();
@@ -194,6 +175,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             try {
                 cameraId = camManager.getCameraIdList()[0];
                 camManager.setTorchMode(cameraId, false);
+                animatorSet.end();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -256,9 +238,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
-
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -278,6 +257,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch(menuItem.getItemId())
         {
             case R.id.addflash_head:
+
                   initFlashHead();
                   return true;
 
@@ -285,6 +265,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
 
             case R.id.share_app:
+                ShareCompat.IntentBuilder.from(this)
+                        .setType("text/plain")
+                        .setChooserTitle("Chooser title")
+                        .setText("http://play.google.com/store/apps/details?id=" + getPackageName())
+                        .startChooser();
                 return true;
 
             case R.id.remove_ads:
