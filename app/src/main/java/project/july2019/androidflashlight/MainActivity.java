@@ -17,14 +17,19 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -34,21 +39,27 @@ import com.example.androidflashlight.R;
 
 import project.july2019.androidflashlight.Animations.ButtonAnimations;
 import project.july2019.androidflashlight.Utilities.CustomButton;
+import project.july2019.androidflashlight.Utils.CommonUtils;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
-public class   MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
-    FloatingActionButton mainButton,leftOffButton,rightOnButton;
+    FloatingActionButton mainButton, leftOffButton, rightOnButton;
     CameraManager camManager;
     String cameraId = null;
-    boolean isOpen=false;
     private static final int CODE_DRAW_OVER_OTHER_APP_PERMISSION = 2084;
     CustomButton button;
     CoordinatorLayout mainFrame;
-    boolean isOn=false;
+    boolean isOn = false;
     ButtonAnimations buttonAnimations;
+    View outerView, innerView;
+    NavigationView navigationView;
+    DrawerLayout drawer;
+    ActionBarDrawerToggle toggle;
+
 
 
     @Override
@@ -56,23 +67,21 @@ public class   MainActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setFullScreen();
-        setTranslucentNavigation();
-        setHidingNavigationBar();
-
+        CommonUtils.setFullScreen(getWindow());
+        CommonUtils.setTranslucentNavigation(getWindow());
+        CommonUtils.setHidingNavigationBar(getWindow());
 
 
         ActivityCompat.requestPermissions(MainActivity.this,
-                new String[]{Manifest.permission.CAMERA,Manifest.permission.INTERNET},
+                new String[]{Manifest.permission.CAMERA, Manifest.permission.INTERNET},
                 1);
 
         initAdMob();
-
         init();
 
     }
 
-    public void initChathead(){
+    public void initFlashHead() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
 
             //If the draw over permission is not available open the settings screen
@@ -87,84 +96,72 @@ public class   MainActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void initializeView() {
-                startService(new Intent(MainActivity.this, ChatHeadServcie.class));
-                finish();
+        startService(new Intent(MainActivity.this, ChatHeadServcie.class));
+        finish();
     }
 
 
-    public boolean hasFlashLight()
-    {
+    public boolean hasFlashLight() {
         return this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
     }
 
 
-    public void init()
-    {
+    public void init() {
 
-         buttonAnimations=new ButtonAnimations();
-
-
-        Toolbar toolbar=(Toolbar)findViewById(R.id.action_bar);
+        buttonAnimations = new ButtonAnimations();
+        outerView = findViewById(R.id.outer_view);
+        innerView = findViewById(R.id.inner_view);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
         setSupportActionBar(toolbar);
-        try{
+        try {
             getSupportActionBar().setTitle("");
-        }catch (NullPointerException e)
-        {
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
 
-        mainFrame=(CoordinatorLayout)findViewById(R.id.parent_layout);
+        mainFrame = (CoordinatorLayout) findViewById(R.id.parent_layout);
 
-        button=(CustomButton)findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                initChathead();
-            }
-        });
+        navigationView=findViewById(R.id.navigation_menu);
+        navigationView.setNavigationItemSelectedListener(this);
 
-
-        //experiment
-//
-//        GradientDrawable gradientDrawable = new GradientDrawable(
-//                GradientDrawable.Orientation.TOP_BOTTOM,
-//                new int[]{ContextCompat.getColor(this, R.color.colorAccent),
-//                        ContextCompat.getColor(this, R.color.colorPrimary),
-//                        ContextCompat.getColor(this, R.color.colorPrimaryDark),
-//                       });
-//
-//        findViewById(R.id.parent_layout).setBackground(gradientDrawable);
 
 
         camManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
 
-        mainButton=(FloatingActionButton)findViewById(R.id.mainButton);
+        mainButton = (FloatingActionButton) findViewById(R.id.mainButton);
 
         mainButton.setOnClickListener(this);
+
+        drawer=findViewById(R.id.my_drawer_layout);
+        toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+
+        toggle.syncState();
 
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onClick(View v) {
-        switch(v.getId())
-        {
+        switch (v.getId()) {
             case R.id.mainButton:
                 doFlash();
-                buttonAnimations.buttonScaleAnimation(this,mainButton);
+                buttonAnimations.buttonScaleAnimation(this, mainButton);
+                buttonAnimations.buttonScaleAnimation(this,innerView);
+                buttonAnimations.buttonScaleAnimation(this,outerView);
                 break;
         }
     }
 
 
-    public void MyToast(String message){
+    public void MyToast(String message) {
 
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    public void ErrorAlert(String errorMessage)
-    {
-        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+    public void ErrorAlert(String errorMessage) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Error");
         builder.setMessage(errorMessage);
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -175,7 +172,7 @@ public class   MainActivity extends AppCompatActivity implements View.OnClickLis
         });
 
 
-        AlertDialog dialog=builder.create();
+        AlertDialog dialog = builder.create();
         dialog.show();
     }
 
@@ -183,8 +180,7 @@ public class   MainActivity extends AppCompatActivity implements View.OnClickLis
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void doFlash() {
 
-        if(!isOn)
-        {
+        if (!isOn) {
             try {
                 cameraId = camManager.getCameraIdList()[0];
                 camManager.setTorchMode(cameraId, true);
@@ -192,27 +188,24 @@ public class   MainActivity extends AppCompatActivity implements View.OnClickLis
 
                 e.printStackTrace();
             }
-            isOn=true;
-        }
-        else
-        {
+            isOn = true;
+        } else {
 
-            try{
+            try {
                 cameraId = camManager.getCameraIdList()[0];
                 camManager.setTorchMode(cameraId, false);
-            }catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            isOn=false;
+            isOn = false;
         }
 
     }
 
 
-    public void initAdMob(){
-        MobileAds.initialize(this,getResources().getString(R.string.admob_ID));
-        AdView mAdView = (AdView)findViewById(R.id.adView);
+    public void initAdMob() {
+        MobileAds.initialize(this, getResources().getString(R.string.admob_ID));
+        AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
     }
@@ -238,16 +231,6 @@ public class   MainActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    public void setFullScreen()
-    {
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-    }
-
-    public void setTranslucentNavigation()
-    {
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-
-    }
 
 
     @Override
@@ -255,14 +238,13 @@ public class   MainActivity extends AppCompatActivity implements View.OnClickLis
         if (requestCode == CODE_DRAW_OVER_OTHER_APP_PERMISSION) {
 
             //Check if the permission is granted or not.
-            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M)
-            {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (Settings.canDrawOverlays(this)) {
                     initializeView();
                 } else { //Permission is not available
                     Toast.makeText(this,
                             getResources().getString(R.string.overlay_grant_permission),
-                            Toast.LENGTH_LONG ).show();
+                            Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -273,46 +255,15 @@ public class   MainActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    public void setHidingNavigationBar(){
-
-        getWindow().getDecorView().setSystemUiVisibility(  View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-
-    }
 
 
-
-    public void MyAlertWindow()
-    {
-        AlertDialog.Builder builder=new AlertDialog.Builder(this);
-        builder.setTitle("Attention");
-        builder.setMessage("Keep flash active ?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-    }
 
 
     @Override
     protected void onResume() {
         super.onResume();
-        setHidingNavigationBar();
+        CommonUtils.setHidingNavigationBar(getWindow());
     }
-
 
 
     @Override
@@ -321,11 +272,36 @@ public class   MainActivity extends AppCompatActivity implements View.OnClickLis
         finish();
     }
 
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater=getMenuInflater();
-        inflater.inflate(R.menu.menu,menu);
-        return true;
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch(menuItem.getItemId())
+        {
+            case R.id.addflash_head:
+                  initFlashHead();
+                  return true;
+
+            case R.id.rate_app:
+                return true;
+
+            case R.id.share_app:
+                return true;
+
+            case R.id.remove_ads:
+                return true;
+
+            case R.id.reset:
+                return true;
+
+            case R.id.app_info:
+                return true;
+
+            case R.id.exit:
+                finish();
+                return true;
+        }
+
+        return false;
     }
 }
 

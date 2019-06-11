@@ -1,8 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="oprion1"/>
-    <item android:title="option2"/>
-    <item android:title="option3"/>
+    <item android:title="Main">
+        <menu>
+            <group
+                android:id="@+id/group_1"
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/addflash_head"
+                    android:icon="@drawable/flash"
+                    android:title="Add Flash Head" />
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="All Labels">
+        <menu>
+            <group
+                android:id="@+id/group_2"
+                android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/rate_app"
+                    android:icon="@drawable/rate"
+                    android:title="Rate App" />
+                <item
+                    android:id="@+id/share_app"
+                    android:icon="@drawable/share"
+                    android:title="Share" />
+                <item
+                    android:id="@+id/remove_ads"
+                    android:title="Remove Ads" />
+                <item
+                    android:id="@+id/reset"
+                    android:icon="@drawable/reset"
+                    android:title="Reset" />
+                <item
+                    android:id="@+id/app_info"
+                    android:icon="@drawable/app_info"
+                    android:title="App Info" />
+                <item
+                    android:id="@+id/exit"
+                    android:icon="@drawable/exit"
+                    android:title="Exit" />
+            </group>
+
+        </menu>
+
+
+    </item>
+
 
 </menu>

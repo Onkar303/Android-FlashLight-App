@@ -16,9 +16,8 @@ public class ButtonAnimations {
                 1f, 0.8f, // Start and end values for the Y axis scaling
                 Animation.RELATIVE_TO_SELF, 0.5f, // Pivot point of X scaling
                 Animation.RELATIVE_TO_SELF, 0.5f); // Pivot point of Y scaling
-        anim.setFillAfter(true); // Needed to keep the result of the animation
+        anim.setFillAfter(false); // Needed to keep the result of the animation
         anim.setDuration(100);
-        anim.setRepeatMode(Animation.REVERSE);
         v.startAnimation(anim);
 
 
