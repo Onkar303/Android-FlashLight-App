@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.example.androidflashlight.R;
 
+import project.july2019.androidflashlight.MainActivity;
+
 public class CommonUtils {
 
     public static void alertPopUp(Context context,String title,String message)
@@ -85,7 +87,7 @@ public class CommonUtils {
         button_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ((MainActivity)context).finish();
             }
         });
 

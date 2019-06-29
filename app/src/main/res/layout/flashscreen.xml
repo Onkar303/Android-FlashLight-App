@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_color"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="project.july2019.androidflashlight.MainActivity">
+
+
+
+    <View
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:background="@drawable/round_background2"
+        android:elevation="5dp"
+        android:alpha="0.4"
+        android:layout_gravity="center"
+        android:id="@+id/outer_view"/>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/mainButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:scaleType="center"
+        android:src="@drawable/power"
+        app:fabCustomSize="90dp"
+        app:maxImageSize="50dp"
+        />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Flash_status"
+        android:textColor="@color/colorAccent"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="180dp"
+        android:id="@+id/flash_status"
+        android:textSize="18dp"
+        android:textAllCaps="true"
+        android:visibility="invisible"/>
+
+
+
+</android.support.design.widget.CoordinatorLayout>

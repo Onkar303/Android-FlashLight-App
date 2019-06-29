@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_color"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <project.july2019.androidflashlight.Utils.CircularSeekBar
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:start_angle="140"
+        app:end_angle="40"
+        app:circle_stroke_width="20dp"
+        android:layout_gravity="center"
+        app:progress="0"
+        app:pointer_halo_color="@color/colorAccent"
+        app:pointer_halo_width="15dp"
+        app:circle_progress_color="@color/colorAccent"
+        app:pointer_color="@color/colorAccent"
+        app:pointer_halo_color_ontouch="@color/dark_color"
+        />
+
+
+</android.support.design.widget.CoordinatorLayout>

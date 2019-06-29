@@ -7,26 +7,6 @@
 
 
 
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@drawable/developer"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
-        android:padding="10dp"
-        android:id="@+id/developer_image"
-        android:backgroundTint="@color/dark_color"/>
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/developer_image"
-        android:layout_marginLeft="5dp"
-        android:text=" Onkar Kalpavriksha"
-        android:layout_centerVertical="true"
-        />
-
 
 
 </RelativeLayout>
