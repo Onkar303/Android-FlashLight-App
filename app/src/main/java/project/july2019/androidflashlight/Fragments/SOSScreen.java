@@ -14,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.androidflashlight.R;
@@ -22,6 +23,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import project.july2019.androidflashlight.Utils.CircularSeekBar;
+import project.july2019.androidflashlight.Utils.MyCustomTimer;
 
 public class SOSScreen extends Fragment implements View.OnClickListener,CircularSeekBar.OnCircularSeekBarChangeListener{
 
@@ -30,9 +32,10 @@ public class SOSScreen extends Fragment implements View.OnClickListener,Circular
     Vibrator vibrator;
     VibrationEffect vibrationEffect;
     CameraManager cameraManager;
-    Date date;
-    Calendar cal;
-    CountDownTimer countDownTimer;
+    TextView frequencyText;
+    MyCustomTimer myCustomTimer;
+    boolean isEnabled=false;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,10 +62,13 @@ public class SOSScreen extends Fragment implements View.OnClickListener,Circular
         circularSeekBar=view.findViewById(R.id.circularseekbar);
         circularSeekBar.setOnSeekBarChangeListener(this);
 
+        frequencyText=view.findViewById(R.id.frequencyText);
+
         vibrator= (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
 
         cameraManager=(CameraManager)getActivity().getSystemService(Context.CAMERA_SERVICE);
 
+        myCustomTimer=new MyCustomTimer(1000000000,1000,getActivity(),cameraManager);
 
     }
 
@@ -71,17 +77,28 @@ public class SOSScreen extends Fragment implements View.OnClickListener,Circular
         switch (v.getId())
         {
             case R.id.sosbutton:
-                countDownTimer.start();
+                if(isEnabled)
+                {
+                    myCustomTimer.cancel();
+                    isEnabled=false;
+                }
+                else
+                {
+                    myCustomTimer.start();
+                    isEnabled=true;
+                }
                 break;
         }
     }
 
-    //circular bar methods
+    //circular seek bar methods
     @Override
     public void onProgressChanged(CircularSeekBar circularSeekBar, int progress, boolean fromUser) {
         int max = circularSeekBar.getMax();
-        if((progress%25) == 0 && progress !=0  )
+        if((progress%25) == 0)
         {
+
+            frequencyText.setText(String.valueOf((progress/25)));
             //Toast.makeText(getContext(), "tiggered", Toast.LENGTH_SHORT).show();
             if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O)
             {
@@ -107,33 +124,4 @@ public class SOSScreen extends Fragment implements View.OnClickListener,Circular
 
     }
 
-    public void doFlash(final long milliseconds)
-    {
-
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M)
-        {
-
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        cal.get(Calendar.SECOND);
-                        try {
-                            if(milliseconds%2==0)
-                            {
-                                cameraManager.setTorchMode(cameraManager.getCameraIdList()[0], true);
-                            }
-                            else
-                            {
-                                cameraManager.setTorchMode(cameraManager.getCameraIdList()[0], false);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).run();
-
-        }
-
-    }
 }

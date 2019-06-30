@@ -1,21 +1,15 @@
 package project.july2019.androidflashlight;
 
 import android.Manifest;
-import android.animation.AnimatorSet;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.hardware.camera2.CameraManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -27,17 +21,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.androidflashlight.R;
 
 import project.july2019.androidflashlight.Adapters.CustomViewPagerAdpater;
-import project.july2019.androidflashlight.Animations.ButtonAnimations;
 import project.july2019.androidflashlight.Fragments.FlashScreen;
 import project.july2019.androidflashlight.Fragments.SOSScreen;
-import project.july2019.androidflashlight.Utilities.CustomButton;
 import project.july2019.androidflashlight.Utils.CommonUtils;
 
 import com.google.android.gms.ads.AdRequest;
