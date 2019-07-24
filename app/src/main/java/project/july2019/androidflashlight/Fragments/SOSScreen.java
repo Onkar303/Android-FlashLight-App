@@ -24,6 +24,7 @@ import java.util.Date;
 
 import project.july2019.androidflashlight.Utils.CircularSeekBar;
 import project.july2019.androidflashlight.Utils.MyCustomTimer;
+import project.july2019.androidflashlight.Utils.SOSThread;
 
 public class SOSScreen extends Fragment implements View.OnClickListener,CircularSeekBar.OnCircularSeekBarChangeListener{
 
@@ -33,8 +34,10 @@ public class SOSScreen extends Fragment implements View.OnClickListener,Circular
     VibrationEffect vibrationEffect;
     CameraManager cameraManager;
     TextView frequencyText;
-    MyCustomTimer myCustomTimer;
+    MyCustomTimer myCustomTimer,customtimer2;
     boolean isEnabled=false;
+    CountDownTimer countDownTimer;
+    SOSFrequency sosFrequencymethod;
 
 
     @Override
@@ -61,14 +64,12 @@ public class SOSScreen extends Fragment implements View.OnClickListener,Circular
 
         circularSeekBar=view.findViewById(R.id.circularseekbar);
         circularSeekBar.setOnSeekBarChangeListener(this);
-
         frequencyText=view.findViewById(R.id.frequencyText);
-
         vibrator= (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-
         cameraManager=(CameraManager)getActivity().getSystemService(Context.CAMERA_SERVICE);
-
         myCustomTimer=new MyCustomTimer(1000000000,1000,getActivity(),cameraManager);
+
+
 
     }
 
@@ -80,6 +81,16 @@ public class SOSScreen extends Fragment implements View.OnClickListener,Circular
                 if(isEnabled)
                 {
                     myCustomTimer.cancel();
+                    try
+                    {
+                        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M)
+                        {
+                            cameraManager.setTorchMode(cameraManager.getCameraIdList()[0],false);
+                        }
+                    }catch(Exception e)
+                    {
+                        e.printStackTrace();
+                    }
                     isEnabled=false;
                 }
                 else
@@ -94,21 +105,21 @@ public class SOSScreen extends Fragment implements View.OnClickListener,Circular
     //circular seek bar methods
     @Override
     public void onProgressChanged(CircularSeekBar circularSeekBar, int progress, boolean fromUser) {
-        int max = circularSeekBar.getMax();
+
         if((progress%25) == 0)
         {
 
+            sosFrequencymethod.getFrequency((progress/25));
             frequencyText.setText(String.valueOf((progress/25)));
             //Toast.makeText(getContext(), "tiggered", Toast.LENGTH_SHORT).show();
             if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O)
             {
-                vibrator.vibrate(VibrationEffect.createOneShot(1000,VibrationEffect.DEFAULT_AMPLITUDE));
+                vibrator.vibrate(VibrationEffect.createOneShot(70,VibrationEffect.DEFAULT_AMPLITUDE));
             }
             else
             {
-                vibrator.vibrate(100);
+                vibrator.vibrate(70);
             }
-
         }
 
 
@@ -123,5 +134,7 @@ public class SOSScreen extends Fragment implements View.OnClickListener,Circular
     public void onStartTrackingTouch(CircularSeekBar seekBar) {
 
     }
+
+
 
 }

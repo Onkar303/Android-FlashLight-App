@@ -31,15 +31,18 @@
                 <item
                     android:id="@+id/remove_ads"
                     android:icon="@drawable/purchase"
-                    android:title="Remove Ads" />
+                    android:title="Remove Ads"
+                    android:visible="false"/>
                 <item
                     android:id="@+id/reset"
                     android:icon="@drawable/reset"
-                    android:title="Reset" />
+                    android:title="Reset"
+                    android:visible="false"/>
                 <item
                     android:id="@+id/app_info"
                     android:icon="@drawable/app_info"
-                    android:title="App Info" />
+                    android:title="App Info"
+                    android:visible="false"/>
                 <item
                     android:id="@+id/exit"
                     android:icon="@drawable/exit"

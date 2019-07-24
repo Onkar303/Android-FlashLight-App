@@ -5,18 +5,27 @@ import android.graphics.Camera;
 import android.hardware.camera2.CameraManager;
 import android.os.Build;
 import android.os.CountDownTimer;
+import android.os.SystemClock;
+import android.util.Log;
+
+import java.util.Calendar;
+
+import project.july2019.androidflashlight.Fragments.SOSScreen;
 
 public class MyCustomTimer extends CountDownTimer {
 
     Context context;
     CameraManager cameraManager;
-    Thread thread;
-    public MyCustomTimer(int timer, int interval, Context context, CameraManager cameraManager)
-    {
-        super(timer,interval);
-        this.context=context;
-        this.cameraManager=cameraManager;
-        thread=new Thread();
+    int currentFrequency=0;
+    SOSScreen sosScreen;
+
+
+    public MyCustomTimer(int timer, int interval, Context context, CameraManager cameraManager) {
+        super(timer, interval);
+        this.context = context;
+        this.cameraManager = cameraManager;
+
+
     }
 
     @Override
@@ -30,34 +39,21 @@ public class MyCustomTimer extends CountDownTimer {
     }
 
 
-    public void doFlash(final long milliseconds)
-    {
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M)
-        {
+    public void doFlash(final long milliseconds) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-
-                    try {
-                        if(milliseconds%2000==0)
-                        {
-                            cameraManager.setTorchMode(cameraManager.getCameraIdList()[0], true);
-                        }
-                        else
-                        {
-                            cameraManager.setTorchMode(cameraManager.getCameraIdList()[0], false);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+            Log.d("seconds",String.valueOf(Math.round(milliseconds/1000)));
+            try {
+                if ((Math.round(milliseconds/1000)%(currentFrequency+1))==0) {
+                    cameraManager.setTorchMode(cameraManager.getCameraIdList()[0], true);
+                } else {
+                    cameraManager.setTorchMode(cameraManager.getCameraIdList()[0], false);
                 }
-            }).run();
-
-
-
-
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
 
     }
 
