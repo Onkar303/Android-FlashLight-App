@@ -37,7 +37,6 @@ public class SOSScreen extends Fragment implements View.OnClickListener,Circular
     MyCustomTimer myCustomTimer,customtimer2;
     boolean isEnabled=false;
     CountDownTimer countDownTimer;
-    SOSFrequency sosFrequencymethod;
 
 
     @Override
@@ -109,7 +108,6 @@ public class SOSScreen extends Fragment implements View.OnClickListener,Circular
         if((progress%25) == 0)
         {
 
-            sosFrequencymethod.getFrequency((progress/25));
             frequencyText.setText(String.valueOf((progress/25)));
             //Toast.makeText(getContext(), "tiggered", Toast.LENGTH_SHORT).show();
             if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O)
