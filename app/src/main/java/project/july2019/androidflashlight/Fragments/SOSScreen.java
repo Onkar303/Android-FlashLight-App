@@ -37,6 +37,11 @@ public class SOSScreen extends Fragment implements View.OnClickListener,Circular
     MyCustomTimer myCustomTimer,customtimer2;
     boolean isEnabled=false;
     CountDownTimer countDownTimer;
+    SOSThread sosThread;
+    Thread mainThread;
+    int frequency;
+    Thread thread;
+
 
 
     @Override
@@ -58,6 +63,7 @@ public class SOSScreen extends Fragment implements View.OnClickListener,Circular
 
     public void init(View view)
     {
+
         sosButton=view.findViewById(R.id.sosbutton);
         sosButton.setOnClickListener(this);
 
@@ -66,7 +72,12 @@ public class SOSScreen extends Fragment implements View.OnClickListener,Circular
         frequencyText=view.findViewById(R.id.frequencyText);
         vibrator= (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         cameraManager=(CameraManager)getActivity().getSystemService(Context.CAMERA_SERVICE);
-        myCustomTimer=new MyCustomTimer(1000000000,1000,getActivity(),cameraManager);
+        //myCustomTimer=new MyCustomTimer(1000000000,1000,getContext(),cameraManager);
+        sosThread=new SOSThread(getActivity(),cameraManager);
+
+
+
+
 
 
 
@@ -76,27 +87,39 @@ public class SOSScreen extends Fragment implements View.OnClickListener,Circular
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.sosbutton:
-                if(isEnabled)
-                {
-                    myCustomTimer.cancel();
-                    try
+                case R.id.sosbutton:
+                    if(isEnabled)
                     {
-                        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M)
-                        {
-                            cameraManager.setTorchMode(cameraManager.getCameraIdList()[0],false);
-                        }
-                    }catch(Exception e)
-                    {
-                        e.printStackTrace();
+                        sosThread.interrupt();
+                        isEnabled=false;
                     }
-                    isEnabled=false;
-                }
-                else
-                {
-                    myCustomTimer.start();
-                    isEnabled=true;
-                }
+                    else
+                    {
+                        sosThread.start();
+                        isEnabled=true;
+                    }
+
+
+//                    if(isEnabled)
+//                    {
+//                        myCustomTimer.cancel();
+//                        try
+//                        {
+//                            if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M)
+//                            {
+//                                cameraManager.setTorchMode(cameraManager.getCameraIdList()[0],false);
+//                            }
+//                        }catch(Exception e)
+//                        {
+//                            e.printStackTrace();
+//                        }
+//                        isEnabled=false;
+//                    }
+//                else
+//                {
+//                    myCustomTimer.start();
+//                    isEnabled=true;
+//                }
                 break;
         }
     }
@@ -109,6 +132,8 @@ public class SOSScreen extends Fragment implements View.OnClickListener,Circular
         {
 
             frequencyText.setText(String.valueOf((progress/25)));
+            frequency=progress/25;
+            sosThread.setFrequency(frequency);
             //Toast.makeText(getContext(), "tiggered", Toast.LENGTH_SHORT).show();
             if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O)
             {
@@ -132,6 +157,7 @@ public class SOSScreen extends Fragment implements View.OnClickListener,Circular
     public void onStartTrackingTouch(CircularSeekBar seekBar) {
 
     }
+
 
 
 
