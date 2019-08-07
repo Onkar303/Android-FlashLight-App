@@ -9,8 +9,8 @@ import android.util.AttributeSet;
 
 public class CustomButton extends AppCompatButton {
 
-    AssetManager am;
-    Typeface typeface;
+    private AssetManager am;
+    private Typeface typeface;
 
     public CustomButton(Context context) {
         super(context);

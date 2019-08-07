@@ -28,19 +28,16 @@ import project.july2019.androidflashlight.Utils.SOSThread;
 
 public class SOSScreen extends Fragment implements View.OnClickListener,CircularSeekBar.OnCircularSeekBarChangeListener{
 
-    FloatingActionButton sosButton;
-    CircularSeekBar circularSeekBar;
-    Vibrator vibrator;
-    VibrationEffect vibrationEffect;
-    CameraManager cameraManager;
-    TextView frequencyText;
-    MyCustomTimer myCustomTimer,customtimer2;
-    boolean isEnabled=false;
-    CountDownTimer countDownTimer;
-    SOSThread sosThread;
-    Thread mainThread;
-    int frequency;
-    Thread thread;
+    private FloatingActionButton sosButton;
+    private CircularSeekBar circularSeekBar;
+    private Vibrator vibrator;
+    private VibrationEffect vibrationEffect;
+    private CameraManager cameraManager;
+    private TextView frequencyText;
+    private boolean isEnabled=false;
+    private SOSThread sosThread;
+    private int frequency;
+
 
 
 

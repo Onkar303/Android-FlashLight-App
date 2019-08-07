@@ -7,10 +7,10 @@ import android.os.SystemClock;
 
 public class SOSThread extends Thread{
 
-    int frequency;
-    Context context;
-    CameraManager cameraManager;
-    boolean isEnabled=false;
+    private int frequency;
+    private Context context;
+    private CameraManager cameraManager;
+    private boolean isEnabled=false;
 
     public SOSThread(Context context, CameraManager cameraManager)
     {

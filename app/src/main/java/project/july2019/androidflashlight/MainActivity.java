@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.example.androidflashlight.R;
 
 import project.july2019.androidflashlight.Adapters.CustomViewPagerAdpater;
+import project.july2019.androidflashlight.Fragments.FlashHeadScreen;
 import project.july2019.androidflashlight.Fragments.FlashScreen;
 import project.july2019.androidflashlight.Fragments.SOSScreen;
 import project.july2019.androidflashlight.Utils.CommonUtils;
@@ -97,10 +98,14 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
         viewPager=findViewById(R.id.viewpager);
         list=new ArrayList<>();
+        //list.add(new FlashHeadScreen());
         list.add(new FlashScreen());
         list.add(new SOSScreen());
         adapter=new CustomViewPagerAdpater(getSupportFragmentManager(),list,this);
         viewPager.setAdapter(adapter);
+
+        //setting the viepager at the middle
+        //viewPager.setCurrentItem(1);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);

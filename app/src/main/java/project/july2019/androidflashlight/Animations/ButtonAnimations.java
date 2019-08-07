@@ -25,23 +25,38 @@ public class ButtonAnimations {
 
     }
 
-    public static AnimatorSet rippleAnimation(View v2) {
+    public static AnimatorSet rippleAnimation(View v1) {
 
         AnimatorSet animatorSet = new AnimatorSet();
 
+        ObjectAnimator animatorV1 = ObjectAnimator.ofPropertyValuesHolder(v1, PropertyValuesHolder.ofFloat("scaleX", 4.6f), PropertyValuesHolder.ofFloat("scaleY", 4.6f));
+        animatorV1.setDuration(3000);
+        animatorV1.setRepeatCount(ObjectAnimator.INFINITE);
+        animatorV1.setRepeatMode(ObjectAnimator.RESTART);
 
-        ObjectAnimator animatorV2 = ObjectAnimator.ofPropertyValuesHolder(v2, PropertyValuesHolder.ofFloat("scaleX", 4.6f), PropertyValuesHolder.ofFloat("scaleY", 4.6f));
-        animatorV2.setDuration(3000);
-        animatorV2.setRepeatCount(ObjectAnimator.INFINITE);
-        animatorV2.setRepeatMode(ObjectAnimator.RESTART);
+        ObjectAnimator fadeoutV1=ObjectAnimator.ofFloat(v1,"alpha",1,0);
+        fadeoutV1.setDuration(3000);
+        fadeoutV1.setRepeatCount(ObjectAnimator.INFINITE);
+        fadeoutV1.setRepeatMode(ObjectAnimator.RESTART);
 
-        ObjectAnimator fadeoutV2=ObjectAnimator.ofFloat(v2,"alpha",1,0);
-        fadeoutV2.setDuration(3000);
-        fadeoutV2.setRepeatCount(ObjectAnimator.INFINITE);
-        fadeoutV2.setRepeatMode(ObjectAnimator.RESTART);
 
-        animatorSet.playTogether(animatorV2,fadeoutV2);
+        animatorSet.playTogether(animatorV1,fadeoutV1);
         return animatorSet;
     }
+
+
+    public static AnimatorSet enableFlashHeadAnimation(View view)
+    {
+        AnimatorSet animatorSet=new AnimatorSet();
+
+
+        ObjectAnimator enableAnimation=ObjectAnimator.ofPropertyValuesHolder(view,PropertyValuesHolder.ofFloat("scaleX", 7.0f), PropertyValuesHolder.ofFloat("scaleY", 7.0f));
+        enableAnimation.setDuration(750);
+
+        animatorSet.play(enableAnimation);
+
+        return animatorSet;
+    }
+
 
 }

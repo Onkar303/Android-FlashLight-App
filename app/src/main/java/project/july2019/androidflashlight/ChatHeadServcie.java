@@ -26,7 +26,7 @@ public class ChatHeadServcie extends Service {
 
     private WindowManager windowManager;
     private View mChatHeadView;
-    boolean isFlashLightOn=false;
+    private boolean isFlashLightOn=false;
 
     public ChatHeadServcie()
     {

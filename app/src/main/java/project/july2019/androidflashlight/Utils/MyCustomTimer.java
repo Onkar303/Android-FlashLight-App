@@ -15,11 +15,11 @@ import project.july2019.androidflashlight.Interfaces.FrequencyInterface;
 
 public class MyCustomTimer extends CountDownTimer implements FrequencyInterface {
 
-    Context context;
-    CameraManager cameraManager;
-    int currentFrequency=0;
-    SOSScreen sosScreen;
-    int frequency;
+    private Context context;
+    private CameraManager cameraManager;
+    private int currentFrequency=0;
+    private SOSScreen sosScreen;
+    private int frequency;
 
 
     public MyCustomTimer(int timer, int interval, Context context, CameraManager cameraManager) {

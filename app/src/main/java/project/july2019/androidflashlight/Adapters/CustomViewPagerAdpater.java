@@ -9,8 +9,8 @@ import java.util.List;
 
 public class CustomViewPagerAdpater extends FragmentPagerAdapter {
 
-    List<Fragment> list;
-    Context context;
+    private List<Fragment> list;
+    private Context context;
 
     public CustomViewPagerAdpater(FragmentManager fm,List<Fragment> list,Context context)
     {

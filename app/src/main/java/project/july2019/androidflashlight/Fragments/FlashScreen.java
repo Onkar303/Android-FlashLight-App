@@ -22,15 +22,15 @@ import project.july2019.androidflashlight.Animations.ButtonAnimations;
 
 public class FlashScreen extends Fragment implements View.OnClickListener{
 
-    AnimatorSet rippleAnimation;
-    TextView flash_status;
-    CoordinatorLayout mainFrame;
-    boolean isOn = false;
-    ButtonAnimations buttonAnimations;
-    View outerView;
-    FloatingActionButton mainButton;
-    CameraManager camManager;
-    String cameraId = null;
+    private AnimatorSet rippleAnimation;
+    private TextView flash_status;
+    private CoordinatorLayout mainFrame;
+    private boolean isOn = false;
+    private ButtonAnimations buttonAnimations;
+    private View outerView;
+    private FloatingActionButton mainButton;
+    private CameraManager camManager;
+    private String cameraId = null;
 
 
 
