@@ -87,8 +87,14 @@ public class SOSScreen extends Fragment implements View.OnClickListener,Circular
                 case R.id.sosbutton:
                     if(isEnabled)
                     {
-                        sosThread.interrupt();
-                        isEnabled=false;
+                        try{
+                            sosThread.stop();
+                            isEnabled=false;
+                        }catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+
                     }
                     else
                     {

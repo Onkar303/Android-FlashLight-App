@@ -12,8 +12,8 @@
 
 
    <Button
-       android:layout_width="53dp"
-       android:layout_height="53dp"
+       android:layout_width="50dp"
+       android:layout_height="50dp"
        android:id="@+id/fab"
        android:background="@drawable/round_button"
        />
@@ -21,8 +21,9 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:src="@drawable/closebold"
-        android:id="@+id/removeView"
         android:layout_toRightOf="@+id/fab"
+        android:id="@+id/removeView"
+        android:tint="@color/dark_color"
 
         />
 

@@ -26,10 +26,10 @@ public class ChatHeadServcie extends Service {
 
     private WindowManager windowManager;
     private View mChatHeadView;
-    private boolean isFlashLightOn=false;
+    private boolean isFlashLightOn = false;
+    private CameraManager cameraManager;
 
-    public ChatHeadServcie()
-    {
+    public ChatHeadServcie() {
 
     }
 
@@ -38,9 +38,7 @@ public class ChatHeadServcie extends Service {
     public void onCreate() {
         super.onCreate();
 
-        mChatHeadView=LayoutInflater.from(this).inflate(R.layout.chatheadlayout,null);
-
-
+        mChatHeadView = LayoutInflater.from(this).inflate(R.layout.chatheadlayout, null);
 
 
 //        final WindowManager.LayoutParams params=new WindowManager.LayoutParams(
@@ -63,21 +61,20 @@ public class ChatHeadServcie extends Service {
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 LAYOUT_FLAG,
-                 WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
 
 
-        params.gravity= Gravity.TOP;
-        params.x=0;
-        params.y=100;
+        params.gravity = Gravity.TOP;
+        params.x = 0;
+        params.y = 100;
 
-        windowManager=(WindowManager)getSystemService(Context.WINDOW_SERVICE);
+        windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
 
         windowManager.addView(mChatHeadView, params);
 
 
-
-        Button fab=(Button)mChatHeadView.findViewById(R.id.fab);
+        Button fab = (Button) mChatHeadView.findViewById(R.id.fab);
         fab.setOnTouchListener(new View.OnTouchListener() {
 
             int lastAction;
@@ -91,15 +88,14 @@ public class ChatHeadServcie extends Service {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
-                switch (event.getAction())
-                {
+                switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
 
-                        intitalX=params.x;
-                        intitalY=params.y;
+                        intitalX = params.x;
+                        intitalY = params.y;
 
-                        initialTouchX=event.getRawX();
-                        initialTouchY=event.getRawY();
+                        initialTouchX = event.getRawX();
+                        initialTouchY = event.getRawY();
                         return true;
 
                     case MotionEvent.ACTION_UP:
@@ -117,18 +113,15 @@ public class ChatHeadServcie extends Service {
                         }
                         lastAction=event.getAction();*/
 
-                        if( (Math.abs(initialTouchX - event.getRawX())<5) && (Math.abs(initialTouchY - event.getRawY())<5) )
-                        {
+                        if ((Math.abs(initialTouchX - event.getRawX()) < 5) && (Math.abs(initialTouchY - event.getRawY()) < 5)) {
 
-                                configureFlashLight();
+                            configureFlashLight();
 
-                        }
-                        else Log.e(TAG,"you moved the head");
+                        } else Log.e(TAG, "you moved the head");
                         return true;
 
 
-
-                    case  MotionEvent.ACTION_MOVE:
+                    case MotionEvent.ACTION_MOVE:
 
                         params.x = intitalX + (int) (event.getRawX() - initialTouchX);
                         params.y = intitalY + (int) (event.getRawY() - initialTouchY);
@@ -142,12 +135,11 @@ public class ChatHeadServcie extends Service {
                 return false;
 
 
-
             }
         });
 
 
-        ImageView cancelView=(ImageView)mChatHeadView.findViewById(R.id.removeView);
+        ImageView cancelView = (ImageView) mChatHeadView.findViewById(R.id.removeView);
         cancelView.bringToFront();
 
         cancelView.setOnTouchListener(new View.OnTouchListener() {
@@ -157,27 +149,36 @@ public class ChatHeadServcie extends Service {
             int intitalY;
             float initialTouchX;
             float initialTouchY;
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
-                switch (event.getAction())
-                {
+                switch (event.getAction()) {
 
 
                     case MotionEvent.ACTION_DOWN:
 
-                        intitalX=params.x;
-                        intitalY=params.y;
+                        intitalX = params.x;
+                        intitalY = params.y;
 
-                        initialTouchX=event.getRawX();
-                        initialTouchY=event.getRawY();
+                        initialTouchX = event.getRawX();
+                        initialTouchY = event.getRawY();
                         return true;
 
                     case MotionEvent.ACTION_UP:
-                        if( (Math.abs(initialTouchX - event.getRawX())<5) && (Math.abs(initialTouchY - event.getRawY())<5) )
-                        {
-                            windowManager.removeView(mChatHeadView);
-                            stopSelf();
+                        if ((Math.abs(initialTouchX - event.getRawX()) < 5) && (Math.abs(initialTouchY - event.getRawY()) < 5)) {
+
+                            try {
+                                windowManager.removeView(mChatHeadView);
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                    cameraManager.setTorchMode(cameraManager.getCameraIdList()[0], false);
+                                }
+                                stopSelf();
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
 
                         }
 
@@ -202,14 +203,12 @@ public class ChatHeadServcie extends Service {
     }
 
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
 
-        if(mChatHeadView == null)
-        {
-           // windowManager.removeView(mChatHeadView);
+        if (mChatHeadView == null) {
+            // windowManager.removeView(mChatHeadView);
         }
     }
 
@@ -220,34 +219,37 @@ public class ChatHeadServcie extends Service {
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void configureFlashLight(){
+    public void configureFlashLight() {
 
-        CameraManager cameraManager=(CameraManager)getSystemService(CAMERA_SERVICE);
+        cameraManager = (CameraManager) getSystemService(CAMERA_SERVICE);
 
-        if(isFlashLightOn)
-        {
-            try{
-                String camerId=cameraManager.getCameraIdList()[0];
-                cameraManager.setTorchMode(camerId,false);
-            }catch (Exception e)
-            {
+        if (isFlashLightOn) {
+            try {
+                String camerId = cameraManager.getCameraIdList()[0];
+                cameraManager.setTorchMode(camerId, false);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            isFlashLightOn=false;
-        }else
-        {
-            try{
-                String camerId=cameraManager.getCameraIdList()[0];
-                cameraManager.setTorchMode(camerId,true);
-            }catch (Exception e)
-            {
+            isFlashLightOn = false;
+        } else {
+            try {
+                String camerId = cameraManager.getCameraIdList()[0];
+                cameraManager.setTorchMode(camerId, true);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            isFlashLightOn=true;
+            isFlashLightOn = true;
         }
 
+    }
+
+    public boolean isGreaterThanM() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return true;
+        }
+        return false;
     }
 
 
