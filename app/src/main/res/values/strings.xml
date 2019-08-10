@@ -18,5 +18,8 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="developer_name">Onkar Kalpavriksha</string>
+    <string name="thank_you_message">Thank you for using my App , please do review and share the app. If you have any concerns please feel free to email me</string>
+    <string name="version_no"></string>
 
 </resources>

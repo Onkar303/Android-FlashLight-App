@@ -21,14 +21,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.androidflashlight.BuildConfig;
 import com.example.androidflashlight.R;
 
 import project.july2019.androidflashlight.Adapters.CustomViewPagerAdpater;
 import project.july2019.androidflashlight.Fragments.FlashHeadScreen;
 import project.july2019.androidflashlight.Fragments.FlashScreen;
 import project.july2019.androidflashlight.Fragments.SOSScreen;
+import project.july2019.androidflashlight.Screens.DeveloperScreen;
 import project.july2019.androidflashlight.Utils.CommonUtils;
 
 import com.google.android.gms.ads.AdRequest;
@@ -42,12 +45,14 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
 
     private static final int CODE_DRAW_OVER_OTHER_APP_PERMISSION = 2084;
-    NavigationView navigationView;
-    DrawerLayout drawer;
-    ActionBarDrawerToggle toggle;
-    ViewPager viewPager;
-    CustomViewPagerAdpater adapter;
-    List<Fragment> list;
+    private NavigationView navigationView;
+    private DrawerLayout drawer;
+    private ActionBarDrawerToggle toggle;
+    private ViewPager viewPager;
+    private CustomViewPagerAdpater adapter;
+    private List<Fragment> list;
+    private TextView versionCode;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +100,9 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
 
     public void init() {
+
+//        versionCode=findViewById(R.id.version_number);
+//        versionCode.setText(String.valueOf(BuildConfig.VERSION_CODE));
 
         viewPager=findViewById(R.id.viewpager);
         list=new ArrayList<>();
@@ -233,6 +241,12 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             case R.id.exit:
                 CommonUtils.exitAlertPopUp(this,"Do you want to exit?","");
                 return true;
+
+            case R.id.developer:
+                Intent i=new Intent(this, DeveloperScreen.class);
+                startActivity(i);
+                return true;
+
         }
 
         return false;
@@ -254,6 +268,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                     Uri.parse("http://play.google.com/store/apps/details?id=" + getPackageName())));
         }
     }
+
+
 
 
 }

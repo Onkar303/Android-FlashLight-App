@@ -1,46 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.androidflashlight"
     xmlns:tools="http://schemas.android.com/tools"
-    >
+    package="com.example.androidflashlight">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.ACTION_MANAGE_OVERLAY_PERMISSION" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
-
-
-
-
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/flash_light_icon_1"
+        android:icon="@mipmap/final_app_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/flash_light_icon_1_round"
+        android:roundIcon="@mipmap/final_app_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name="project.july2019.androidflashlight.Screens.DeveloperScreen"></activity>
         <activity
             android:name="project.july2019.androidflashlight.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-4339054362627963~1501764371" />
 
-
         <service
             android:name="project.july2019.androidflashlight.ChatHeadServcie"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
 
 </manifest>
