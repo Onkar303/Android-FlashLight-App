@@ -10,7 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:weightSum="2"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:clickable="true"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,7 +22,8 @@
             android:elevation="5dp"
             android:orientation="vertical"
             android:weightSum="3"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:foreground="@drawable/custom_ripple_email_button">
 
             <LinearLayout
                 android:layout_width="match_parent"
