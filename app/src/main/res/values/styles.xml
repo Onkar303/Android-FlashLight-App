@@ -9,7 +9,9 @@
         <item name="android:textColorSecondary">@android:color/white</item>
         <item name="android:itemBackground">@color/dark_color</item>
         <item name="android:listDivider">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/dark_color</item>
+        <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
 
+
+    <!--add splash screen with vector image and make a drawbale file ... add in android:windowBackground using a drawable with layer list  -->
 </resources>

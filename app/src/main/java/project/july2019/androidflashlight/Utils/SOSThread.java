@@ -19,30 +19,59 @@ public class SOSThread extends Thread {
 
     @Override
     public void run() {
-
         for (long i = 0; i < 1000000000; i++) {
-            try {
-
-                      if (isEnabled) {
-                          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                              cameraManager.setTorchMode(cameraManager.getCameraIdList()[0], false);
-                              isEnabled = false;
-                          }
-                      } else {
-                          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                              cameraManager.setTorchMode(cameraManager.getCameraIdList()[0], true);
-                              isEnabled = true;
-                          }
-                      }
-                      sleep(1000 / frequency);
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (isInterrupted()) {
+                stopThread();
+            } else {
+                try {
+                    if (isEnabled) {
+                        disableCamera();
+                    } else {
+                        enableCamera();
+                    }
+                    sleep(1000 / frequency);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
+
+
         }
     }
 
     public void setFrequency(int frequency) {
         this.frequency = frequency;
+    }
+
+    public void enableCamera() {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                cameraManager.setTorchMode(cameraManager.getCameraIdList()[0], true);
+                isEnabled = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void disableCamera() {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                cameraManager.setTorchMode(cameraManager.getCameraIdList()[0], false);
+                isEnabled = false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void stopThread() {
+
+        if (isEnabled) {
+            disableCamera();
+        }
+
     }
 
 
