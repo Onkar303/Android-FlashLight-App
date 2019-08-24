@@ -10,7 +10,8 @@
    <item>
       <shape android:shape="ring"
          android:useLevel="false"
-         android:innerRadius="0dp">
+         android:innerRadius="0dp"
+         android:thickness="45dp" >
          <solid android:color="@color/colorAccent"/>
       </shape>
    </item>

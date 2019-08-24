@@ -20,19 +20,16 @@ public class SOSThread extends Thread {
     @Override
     public void run() {
         for (long i = 0; i < 1000000000; i++) {
-            if (isInterrupted()) {
-                stopThread();
-            } else {
-                try {
-                    if (isEnabled) {
-                        disableCamera();
-                    } else {
-                        enableCamera();
-                    }
-                    sleep(1000 / frequency);
-                } catch (Exception e) {
-                    e.printStackTrace();
+
+            try {
+                if (isEnabled) {
+                    disableCamera();
+                } else {
+                    enableCamera();
                 }
+                sleep(1000 / frequency);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
 
@@ -52,7 +49,6 @@ public class SOSThread extends Thread {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public void disableCamera() {
@@ -70,6 +66,8 @@ public class SOSThread extends Thread {
 
         if (isEnabled) {
             disableCamera();
+
+
         }
 
     }
