@@ -215,10 +215,12 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         {
             case R.id.addflash_head:
                   initFlashHead();
+                  closeDrawer();
                   return true;
 
             case R.id.rate_app:
                 rateApp();
+                closeDrawer();
                 return true;
 
             case R.id.share_app:
@@ -227,6 +229,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                         .setChooserTitle("Chooser title")
                         .setText("http://play.google.com/store/apps/details?id=" + getPackageName())
                         .startChooser();
+                closeDrawer();
                 return true;
 
             case R.id.remove_ads:
@@ -240,11 +243,13 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
             case R.id.exit:
                 CommonUtils.exitAlertPopUp(this,"Do you want to exit?","");
+                closeDrawer();
                 return true;
 
             case R.id.developer:
                 Intent i=new Intent(this, DeveloperScreen.class);
                 startActivity(i);
+                closeDrawer();
                 return true;
 
         }
@@ -267,6 +272,11 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             startActivity(new Intent(Intent.ACTION_VIEW,
                     Uri.parse("http://play.google.com/store/apps/details?id=" + getPackageName())));
         }
+    }
+
+
+    public void closeDrawer(){
+        drawer.closeDrawers();
     }
 
 

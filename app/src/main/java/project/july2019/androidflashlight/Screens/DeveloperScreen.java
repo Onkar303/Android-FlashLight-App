@@ -13,7 +13,7 @@ import project.july2019.androidflashlight.Utils.CommonUtils;
 
 public class DeveloperScreen extends AppCompatActivity implements View.OnClickListener {
 
-    private Button button;
+    private Button sendEmail,back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,8 +25,13 @@ public class DeveloperScreen extends AppCompatActivity implements View.OnClickLi
     }
 
     public void init(){
-        button=findViewById(R.id.send_email);
-        button.setOnClickListener(this);
+        sendEmail=findViewById(R.id.send_email);
+        sendEmail.setOnClickListener(this);
+
+
+        back=(Button)findViewById(R.id.back);
+        back.setOnClickListener(this);
+
 
 
     }
@@ -42,6 +47,10 @@ public class DeveloperScreen extends AppCompatActivity implements View.OnClickLi
                 i.setType("text/plain");
                 i.putExtra(Intent.EXTRA_EMAIL,new String[]{"onkarkalpavriksha@gmail.com"});
                 startActivity(Intent.createChooser(i,"Send email"));
+                break;
+
+            case R.id.back:
+                finish();
                 break;
         }
     }
