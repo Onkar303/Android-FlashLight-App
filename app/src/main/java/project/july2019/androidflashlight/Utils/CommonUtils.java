@@ -80,9 +80,10 @@ public class CommonUtils {
         title_text.setText(title);
         builder.setView(v);
         final AlertDialog alertDialog=builder.create();
-        alertDialog.getWindow().setWindowAnimations(R.style.AppTheme);
-        alertDialog.getWindow().setBackgroundDrawable(context.getResources().getDrawable(R.drawable.aler_dialog_background));
         alertDialog.show();
+        alertDialog.getWindow().setWindowAnimations(R.style.AppTheme);
+        alertDialog.getWindow().setLayout(700,350);
+        alertDialog.getWindow().setBackgroundDrawable(context.getResources().getDrawable(R.drawable.aler_dialog_background));
 
         button_yes.setOnClickListener(new View.OnClickListener() {
             @Override

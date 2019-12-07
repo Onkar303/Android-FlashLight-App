@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 return true;
 
             case R.id.exit:
-                CommonUtils.exitAlertPopUp(this,"Do you want to exit?","");
+                CommonUtils.exitAlertPopUp(this,"ALERT!!","Do you really want to exit?");
                 closeDrawer();
                 return true;
 
