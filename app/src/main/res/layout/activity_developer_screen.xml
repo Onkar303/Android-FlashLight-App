@@ -25,7 +25,8 @@
                 android:background="@drawable/backbutton"
                 android:id="@+id/back"
                 android:layout_marginLeft="20dp"
-                android:foreground="@drawable/back_ripple"/>
+                android:foreground="@drawable/back_ripple"
+                android:elevation="5dp"/>
 
         </LinearLayout>
 
@@ -37,8 +38,9 @@
             android:elevation="5dp"
             android:orientation="vertical"
             android:weightSum="3"
+            android:clickable="true"
             android:layout_weight="1"
-            android:foreground="@drawable/custom_ripple_email_button">
+            android:foreground="@drawable/developer_card_ripple">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -117,6 +119,7 @@
                android:text="Send Email"
                android:textColor="@color/colorAccent"
                android:id="@+id/send_email"
+               android:elevation="5dp"
                android:foreground="@drawable/custom_ripple_email_button"
                />
 
