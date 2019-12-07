@@ -23,7 +23,7 @@
         android:src="@drawable/closebold"
         android:layout_toRightOf="@+id/fab"
         android:id="@+id/removeView"
-        android:tint="@color/dark_color"
+        android:tint="@android:color/black"
 
         />
 
