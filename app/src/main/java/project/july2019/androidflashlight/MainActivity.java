@@ -21,6 +21,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +43,8 @@ import com.google.android.gms.ads.MobileAds;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener,ViewPager.OnPageChangeListener,View.OnClickListener
+         {
 
 
     private static final int CODE_DRAW_OVER_OTHER_APP_PERMISSION = 2084;
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     private CustomViewPagerAdpater adapter;
     private List<Fragment> list;
     private TextView versionCode;
+    private ImageView rightArrow,leftArrow;
 
 
     @Override
@@ -111,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         list.add(new SOSScreen());
         adapter=new CustomViewPagerAdpater(getSupportFragmentManager(),list,this);
         viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(this);
 
         //setting the viepager at the middle
         //viewPager.setCurrentItem(1);
@@ -134,6 +139,15 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+
+
+        rightArrow=findViewById(R.id.right_arrow);
+        rightArrow.setOnClickListener(this);
+        leftArrow=findViewById(R.id.left_arrow);
+        leftArrow.setOnClickListener(this);
+
+        leftArrow.setVisibility(View.GONE);
 
     }
 
@@ -280,7 +294,47 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     }
 
 
+    //view pager method
+    @Override
+    public void onPageScrolled(int i, float v, int i1) {
 
+    }
 
+    @Override
+    public void onPageSelected(int i) {
+        if(i==0)
+        {
+            rightArrow.setVisibility(View.VISIBLE);
+            leftArrow.setVisibility(View.GONE);
+        }
+        else
+        {
+            rightArrow.setVisibility(View.GONE);
+            leftArrow.setVisibility(View.VISIBLE);
+        }
+        //Toast.makeText(this, "jhhg", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int i) {
+
+    }
+
+    //click methods
+    @Override
+    public void onClick(View view) {
+
+        switch(view.getId())
+        {
+            case R.id.right_arrow:
+                viewPager.setCurrentItem(1,true);
+                break;
+            case R.id.left_arrow:
+                viewPager.setCurrentItem(0,true);
+                break;
+        }
+
+    }
 }
 

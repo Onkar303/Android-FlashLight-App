@@ -44,6 +44,27 @@
 
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/right"
+            android:id="@+id/right_arrow"
+            android:foreground="@drawable/right_left_arrow_ripple"/>
+
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/left"
+            android:layout_centerVertical="true"
+            android:id="@+id/left_arrow"
+            android:foreground="@drawable/right_left_arrow_ripple"/>
+
+
+
     </RelativeLayout>
 
 
