@@ -11,6 +11,7 @@ public class SOSThread extends Thread {
     private Context context;
     private CameraManager cameraManager;
     private boolean isEnabled = false;
+    private int count = 1000000000;
 
     public SOSThread(Context context, CameraManager cameraManager) {
         this.context = context;
@@ -19,25 +20,38 @@ public class SOSThread extends Thread {
 
     @Override
     public void run() {
-        for (long i = 0; i < 1000000000; i++) {
+        for (long i = 0; i < count; i++) {
 
             try {
-                if (isEnabled) {
-                    disableCamera();
-                } else {
-                    enableCamera();
+                if(frequency==0)
+                {
+                    interrupt();
                 }
-                sleep(1000 / frequency);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                else
+                {
+                    if (isEnabled) {
+                        disableCamera();
+                    } else {
+                        enableCamera();
+                    }
+                    sleep(1000 / frequency);
+                }
+            } catch (InterruptedException e) {
+                disableCamera();
+                return;
 
+            }
 
         }
     }
 
     public void setFrequency(int frequency) {
         this.frequency = frequency;
+    }
+
+    public int getFrequency()
+    {
+        return frequency;
     }
 
     public void enableCamera() {

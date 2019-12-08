@@ -79,7 +79,6 @@ public class SOSScreen extends Fragment implements View.OnClickListener, Circula
                 if (isEnabled) {
                     try {
                         sosThread.interrupt();
-                        sosThread.stopThread();
                         isEnabled = false;
                     } catch (Exception e) {
                         e.printStackTrace();
