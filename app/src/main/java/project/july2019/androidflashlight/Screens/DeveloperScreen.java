@@ -41,17 +41,19 @@ public class DeveloperScreen extends AppCompatActivity implements View.OnClickLi
         switch (v.getId())
         {
             case R.id.send_email:
-
-
-                Intent i =new Intent(Intent.ACTION_SEND);
-                i.setType("text/plain");
-                i.putExtra(Intent.EXTRA_EMAIL,new String[]{"onkarkalpavriksha@gmail.com"});
-                startActivity(Intent.createChooser(i,"Send email"));
+                sendEmail();
                 break;
 
             case R.id.back:
                 finish();
                 break;
         }
+    }
+
+    private void sendEmail(){
+        Intent i =new Intent(Intent.ACTION_SEND);
+        i.setType("text/plain");
+        i.putExtra(Intent.EXTRA_EMAIL,new String[]{"onkarkalpavriksha@gmail.com"});
+        startActivity(Intent.createChooser(i,"Send email"));
     }
 }
