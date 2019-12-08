@@ -315,8 +315,10 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
         if (v>0 && v<1)
         {
-            rightArrow.setVisibility(View.GONE);
-            leftArrow.setVisibility(View.GONE);
+            //rightArrow.setVisibility(View.GONE);
+            rightArrow.setAlpha(1-v);
+            //leftArrow.setVisibility(View.GONE);
+            leftArrow.setAlpha(v);
         }
 
         if (i == 1 && v==0)
