@@ -3,6 +3,7 @@ package project.july2019.androidflashlight.Utils;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -99,6 +100,35 @@ public class CommonUtils {
             }
         });
 
+    }
+
+
+    public static void setExitBottomDialog(final Context context){
+
+        final BottomSheetDialog dialog=new BottomSheetDialog(context,R.style.AppTheme);
+
+        View view = LayoutInflater.from(context).inflate(R.layout.bottomsheetdialogexit,null);
+        dialog.setContentView(view);
+
+        CustomTextView yes = view.findViewById(R.id.yes);
+        CustomTextView no = view.findViewById(R.id.no);
+
+
+        dialog.show();
+
+        yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)context).finish();
+            }
+        });
+
+        no.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
     }
 
 

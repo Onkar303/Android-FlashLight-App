@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/exitbackground"
+    android:orientation="vertical"
+    >
+
+    <project.july2019.androidflashlight.Utils.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Are you Sure ?"
+        android:textSize="35sp"
+        android:padding="10dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:background="@color/cardview_dark_background"/>
+
+    <project.july2019.androidflashlight.Utils.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/yes"
+        android:padding="10dp"
+        android:text="yes"
+        android:textSize="25sp"
+        android:background="@null"
+        android:textColor="@color/cardview_dark_background"
+        android:foreground="@drawable/exit_ripple_dark"
+
+        />
+
+    <project.july2019.androidflashlight.Utils.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/no"
+        android:padding="10dp"
+        android:background="@null"
+        android:text="no"
+        android:textSize="25sp"
+        android:foreground="@drawable/exit_ripple_dark"
+    />
+
+</LinearLayout>
