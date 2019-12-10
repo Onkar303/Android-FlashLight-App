@@ -105,7 +105,7 @@ public class CommonUtils {
 
     public static void setExitBottomDialog(final Context context){
 
-        final BottomSheetDialog dialog=new BottomSheetDialog(context,R.style.AppTheme);
+        final BottomSheetDialog dialog=new BottomSheetDialog(context,R.style.AlertDiaogTheme);
 
         View view = LayoutInflater.from(context).inflate(R.layout.bottomsheetdialogexit,null);
         dialog.setContentView(view);
