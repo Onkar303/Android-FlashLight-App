@@ -4,4 +4,6 @@ public class StringConstants {
 
     public static final String preferenceName = "CameraStatus";
     public static final String preferenceAttr = "isEnabled";
+
+
 }
