@@ -70,7 +70,7 @@ public class SOSScreen extends Fragment implements View.OnClickListener, Circula
         vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         cameraManager = (CameraManager) getActivity().getSystemService(Context.CAMERA_SERVICE);
         //myCustomTimer=new MyCustomTimer(1000000000,1000,getContext(),cameraManager);
-        sosThread = new SOSThread(getActivity(), cameraManager);
+
     }
 
     @Override
@@ -85,7 +85,7 @@ public class SOSScreen extends Fragment implements View.OnClickListener, Circula
                         e.printStackTrace();
                     }
                 } else {
-
+                    sosThread = new SOSThread(getActivity(), cameraManager);
                     sosThread.start();
                     CommonUtils.setCameraStatus(true,getContext());
                 }
