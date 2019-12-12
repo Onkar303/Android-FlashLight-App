@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ClipboardManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -40,6 +41,7 @@ import project.july2019.androidflashlight.Fragments.SOSScreen;
 import project.july2019.androidflashlight.Screens.DeveloperScreen;
 import project.july2019.androidflashlight.Utils.CommonUtils;
 import project.july2019.androidflashlight.Utils.CustomTextView;
+import project.july2019.androidflashlight.Utils.StringConstants;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
         initAdMob();
         init();
+        CommonUtils.initSharePreferences(this);
 
     }
 
@@ -360,6 +363,10 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         }
 
     }
+
+
+
+
 
 }
 

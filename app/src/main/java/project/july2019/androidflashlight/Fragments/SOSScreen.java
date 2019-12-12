@@ -24,6 +24,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import project.july2019.androidflashlight.Utils.CircularSeekBar;
+import project.july2019.androidflashlight.Utils.CommonUtils;
 import project.july2019.androidflashlight.Utils.MyCustomTimer;
 import project.july2019.androidflashlight.Utils.SOSThread;
 
@@ -76,16 +77,17 @@ public class SOSScreen extends Fragment implements View.OnClickListener, Circula
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.sosbutton:
-                if (isEnabled) {
+                if (CommonUtils.getCameraStatus(getContext())) {
                     try {
                         sosThread.interrupt();
-                        isEnabled = false;
+                        CommonUtils.setCameraStatus(false,getContext());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 } else {
+
                     sosThread.start();
-                    isEnabled = true;
+                    CommonUtils.setCameraStatus(true,getContext());
                 }
 
 
@@ -117,18 +119,28 @@ public class SOSScreen extends Fragment implements View.OnClickListener, Circula
     @Override
     public void onProgressChanged(CircularSeekBar circularSeekBar, int progress, boolean fromUser) {
 
-        if ((progress % 25) == 0) {
+        try
+        {
 
-            frequencyText.setText(String.valueOf((progress / 25)));
-            frequency = progress / 25;
-            sosThread.setFrequency(frequency);
-            //Toast.makeText(getContext(), "tiggered", Toast.LENGTH_SHORT).show();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vibrator.vibrate(VibrationEffect.createOneShot(70, VibrationEffect.DEFAULT_AMPLITUDE));
-            } else {
-                vibrator.vibrate(70);
+            if ((progress % 25) == 0) {
+
+                frequencyText.setText(String.valueOf((progress / 25)));
+                frequency = progress / 25;
+                sosThread.setFrequency(frequency);
+                //Toast.makeText(getContext(), "tiggered", Toast.LENGTH_SHORT).show();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    vibrator.vibrate(VibrationEffect.createOneShot(70, VibrationEffect.DEFAULT_AMPLITUDE));
+                } else {
+                    vibrator.vibrate(70);
+                }
             }
+
+
+        }catch (Exception e)
+        {
+            System.out.println("divide by 0 exception");
         }
+
 
 
     }

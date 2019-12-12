@@ -3,6 +3,9 @@ package project.july2019.androidflashlight.Utils;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.hardware.camera2.CameraManager;
+import android.os.Build;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -16,6 +19,8 @@ import android.widget.Toast;
 import com.example.androidflashlight.R;
 
 import project.july2019.androidflashlight.MainActivity;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class CommonUtils {
 
@@ -130,6 +135,61 @@ public class CommonUtils {
             }
         });
     }
+
+
+    public static void initSharePreferences(Context context)
+    {
+        SharedPreferences.Editor preferences=context.getSharedPreferences(StringConstants.preferenceName,MODE_PRIVATE).edit();
+        preferences.putBoolean(StringConstants.preferenceAttr,false);
+        preferences.commit();
+        preferences.apply();
+
+    }
+
+    public static boolean getCameraStatus(Context context){
+
+        SharedPreferences preferences = context.getSharedPreferences(StringConstants.preferenceName, MODE_PRIVATE);
+        return preferences.getBoolean(StringConstants.preferenceAttr,false);
+
+    }
+
+    public static void setCameraStatus(boolean isEnabled,Context context)
+    {
+        SharedPreferences.Editor preferences=context.getSharedPreferences(StringConstants.preferenceName,MODE_PRIVATE).edit();
+        preferences.putBoolean(StringConstants.preferenceAttr,isEnabled);
+        preferences.commit();
+        preferences.apply();
+    }
+
+
+
+    public static void enableCamera(Context context, CameraManager cameraManager){
+
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                cameraManager.setTorchMode(cameraManager.getCameraIdList()[0], true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    public static void disableCamera(Context context,CameraManager cameraManager){
+
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                cameraManager.setTorchMode(cameraManager.getCameraIdList()[0], false);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 
 
 }

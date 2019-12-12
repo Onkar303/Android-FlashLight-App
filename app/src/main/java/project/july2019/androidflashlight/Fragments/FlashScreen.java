@@ -2,6 +2,7 @@ package project.july2019.androidflashlight.Fragments;
 
 import android.animation.AnimatorSet;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.hardware.camera2.CameraManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +20,10 @@ import android.widget.TextView;
 import com.example.androidflashlight.R;
 
 import project.july2019.androidflashlight.Animations.ButtonAnimations;
+import project.july2019.androidflashlight.Utils.CommonUtils;
+import project.july2019.androidflashlight.Utils.StringConstants;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class FlashScreen extends Fragment implements View.OnClickListener{
 
@@ -80,29 +85,31 @@ public class FlashScreen extends Fragment implements View.OnClickListener{
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void doFlash() {
 
-        if (!isOn) {
+        if (!CommonUtils.getCameraStatus(getContext())) {
             try {
-                cameraId = camManager.getCameraIdList()[0];
-                camManager.setTorchMode(cameraId, true);
+                CommonUtils.enableCamera(getContext(),camManager);
                 rippleAnimation.start();
                 flash_status.setText("On");
             } catch (Exception e) {
 
                 e.printStackTrace();
             }
-            isOn = true;
+            CommonUtils.setCameraStatus(true,getContext());
         } else {
 
             try {
-                cameraId = camManager.getCameraIdList()[0];
-                camManager.setTorchMode(cameraId, false);
+                CommonUtils.disableCamera(getContext(),camManager);
                 rippleAnimation.end();
                 flash_status.setText("Off");
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            isOn = false;
+            CommonUtils.setCameraStatus(false,getContext());
         }
 
     }
+
+
+
+
 }
