@@ -1,9 +1,11 @@
 package project.july2019.androidflashlight.Utils;
 
 
+import android.animation.AnimatorSet;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.hardware.camera2.CameraManager;
 import android.os.Build;
 import android.support.design.widget.BottomSheetDialog;
@@ -18,11 +20,15 @@ import android.widget.Toast;
 
 import com.example.androidflashlight.R;
 
+import project.july2019.androidflashlight.Animations.ButtonAnimations;
 import project.july2019.androidflashlight.MainActivity;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class CommonUtils {
+
+
+    static AnimatorSet rippleAnimation;
 
     public static void alertPopUp(Context context,String title,String message)
     {
@@ -74,7 +80,7 @@ public class CommonUtils {
 
     }
 
-    public static void exitAlertPopUp(final Context context, String title, String message)
+    public static void endFlashAlertPopUp(final Context context, String message, String title, final CameraManager cameraManager)
     {
         AlertDialog.Builder builder=new AlertDialog.Builder(context);
         View v= LayoutInflater.from(context).inflate(R.layout.alert_dialog_layout,null);
@@ -88,13 +94,53 @@ public class CommonUtils {
         final AlertDialog alertDialog=builder.create();
         alertDialog.show();
         alertDialog.getWindow().setWindowAnimations(R.style.AppTheme);
-        alertDialog.getWindow().setLayout(700,350);
-        alertDialog.getWindow().setBackgroundDrawable(context.getResources().getDrawable(R.drawable.aler_dialog_background));
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        alertDialog.getWindow().setLayout(1000,700);
+        //alertDialog.getWindow().setBackgroundDrawable(context.getResources().getDrawable(R.drawable.aler_dialog_background));
 
         button_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)context).finish();
+
+                    setFlashCameraStatus(false,context);
+                    disableCamera(context,cameraManager);
+                    alertDialog.dismiss();
+
+            }
+        });
+
+        button_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+    }
+
+
+    public static void endSosAlertPopUp(final Context context, String message, String title, final CameraManager cameraManager)
+    {
+        AlertDialog.Builder builder=new AlertDialog.Builder(context);
+        View v= LayoutInflater.from(context).inflate(R.layout.alert_dialog_layout,null);
+        TextView message_text=v.findViewById(R.id.message);
+        TextView title_text=v.findViewById(R.id.title);
+        Button button_yes=v.findViewById(R.id.button_yes);
+        Button button_no=v.findViewById(R.id.button_no);
+        message_text.setText(message);
+        title_text.setText(title);
+        builder.setView(v);
+        final AlertDialog alertDialog=builder.create();
+        alertDialog.show();
+        alertDialog.getWindow().setWindowAnimations(R.style.AppTheme);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        alertDialog.getWindow().setLayout(1000,700);
+        //alertDialog.getWindow().setBackgroundDrawable(context.getResources().getDrawable(R.drawable.aler_dialog_background));
+
+        button_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               SOSThread.interrupted();
             }
         });
 
@@ -140,25 +186,41 @@ public class CommonUtils {
     public static void initSharePreferences(Context context)
     {
         SharedPreferences.Editor preferences=context.getSharedPreferences(StringConstants.preferenceName,MODE_PRIVATE).edit();
-        preferences.putBoolean(StringConstants.preferenceAttr,false);
+        preferences.putBoolean(StringConstants.preferenceAttrFlash,false);
+        preferences.putBoolean(StringConstants.preferenceAttrSOS,false);
         preferences.commit();
         preferences.apply();
 
     }
 
-    public static boolean getCameraStatus(Context context){
+    public static boolean getFlashCameraStatus(Context context)
+    {
 
         SharedPreferences preferences = context.getSharedPreferences(StringConstants.preferenceName, MODE_PRIVATE);
-        return preferences.getBoolean(StringConstants.preferenceAttr,false);
+        return preferences.getBoolean(StringConstants.preferenceAttrFlash,false);
 
     }
 
-    public static void setCameraStatus(boolean isEnabled,Context context)
+    public static boolean getSosCameraStatus(Context context)
+    {
+        SharedPreferences preferences = context.getSharedPreferences(StringConstants.preferenceName,MODE_PRIVATE);
+        return preferences.getBoolean(StringConstants.preferenceAttrSOS,false);
+    }
+
+    public static void setFlashCameraStatus(boolean isFlashEnabled,Context context)
     {
         SharedPreferences.Editor preferences=context.getSharedPreferences(StringConstants.preferenceName,MODE_PRIVATE).edit();
-        preferences.putBoolean(StringConstants.preferenceAttr,isEnabled);
+        preferences.putBoolean(StringConstants.preferenceAttrFlash,isFlashEnabled);
         preferences.commit();
         preferences.apply();
+    }
+
+
+    public static void setSosCameraStatus(boolean isSosEnabled,Context context){
+        SharedPreferences.Editor editor = context.getSharedPreferences(StringConstants.preferenceName,MODE_PRIVATE).edit();
+        editor.putBoolean(StringConstants.preferenceAttrSOS,isSosEnabled);
+        editor.apply();
+        editor.commit();
     }
 
 
@@ -188,6 +250,32 @@ public class CommonUtils {
         }
 
     }
+
+
+    public static void setCameraFrequency(Context context,int frequency)
+    {
+        SharedPreferences.Editor editor = context.getSharedPreferences(StringConstants.preferenceName,MODE_PRIVATE).edit();
+        editor.putInt(StringConstants.preferenceferquency,frequency);
+        editor.apply();
+        editor.commit();
+
+    }
+
+
+    public static int getCameraFrequency(Context context)
+    {
+        SharedPreferences preferences = context.getSharedPreferences(StringConstants.preferenceName,MODE_PRIVATE);
+        return preferences.getInt(StringConstants.preferenceferquency,0);
+    }
+
+
+
+    public static void removeSharedPreferences(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(StringConstants.preferenceName,MODE_PRIVATE);
+        sharedPreferences.edit().clear().apply();
+
+    }
+
 
 
 

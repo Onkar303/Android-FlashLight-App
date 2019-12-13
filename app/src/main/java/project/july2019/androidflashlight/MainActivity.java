@@ -50,8 +50,7 @@ import com.google.android.gms.ads.MobileAds;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener,ViewPager.OnPageChangeListener,View.OnClickListener
-         {
+public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener,ViewPager.OnPageChangeListener,View.OnClickListener {
 
 
     private static final int CODE_DRAW_OVER_OTHER_APP_PERMISSION = 2084;
@@ -62,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     private CustomViewPagerAdpater adapter;
     private List<Fragment> list;
     private TextView versionCode;
-    private ImageView rightArrow,leftArrow;
+    private ImageView rightArrow, leftArrow;
 
 
     @Override
@@ -116,12 +115,12 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 //        versionCode=findViewById(R.id.version_number);
 //        versionCode.setText(String.valueOf(BuildConfig.VERSION_CODE));
 
-        viewPager=findViewById(R.id.viewpager);
-        list=new ArrayList<>();
+        viewPager = findViewById(R.id.viewpager);
+        list = new ArrayList<>();
         //list.add(new FlashHeadScreen());
         list.add(new FlashScreen());
         list.add(new SOSScreen());
-        adapter=new CustomViewPagerAdpater(getSupportFragmentManager(),list,this);
+        adapter = new CustomViewPagerAdpater(getSupportFragmentManager(), list, this);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(this);
 
@@ -138,30 +137,25 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         }
 
 
-        navigationView=findViewById(R.id.navigation_menu);
+        navigationView = findViewById(R.id.navigation_menu);
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        drawer=findViewById(R.id.my_drawer_layout);
+        drawer = findViewById(R.id.my_drawer_layout);
         toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
 
-
-        rightArrow=findViewById(R.id.right_arrow);
+        rightArrow = findViewById(R.id.right_arrow);
         rightArrow.setOnClickListener(this);
-        leftArrow=findViewById(R.id.left_arrow);
+        leftArrow = findViewById(R.id.left_arrow);
         leftArrow.setOnClickListener(this);
 
         leftArrow.setVisibility(View.GONE);
 
     }
-
-
-
-
 
 
     public void initAdMob() {
@@ -193,7 +187,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == CODE_DRAW_OVER_OTHER_APP_PERMISSION) {
@@ -221,8 +214,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     protected void onResume() {
         super.onResume();
         CommonUtils.setHidingNavigationBar(getWindow());
-        for(int i=0;i<navigationView.getMenu().size();i++)
-        {
+        for (int i = 0; i < navigationView.getMenu().size(); i++) {
             navigationView.getMenu().getItem(i).setChecked(false);
         }
 
@@ -238,13 +230,12 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch(menuItem.getItemId())
-        {
+        switch (menuItem.getItemId()) {
             case R.id.addflash_head:
-                  initFlashHead();
-                  closeDrawer();
+                initFlashHead();
+                closeDrawer();
 
-                  return true;
+                return true;
 
             case R.id.rate_app:
                 rateApp();
@@ -276,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 return true;
 
             case R.id.developer:
-                Intent i=new Intent(this, DeveloperScreen.class);
+                Intent i = new Intent(this, DeveloperScreen.class);
                 startActivity(i);
                 closeDrawer();
                 return true;
@@ -287,8 +278,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         return false;
     }
 
-    public void rateApp()
-    {
+    public void rateApp() {
         Uri uri = Uri.parse("market://details?id=" + getPackageName());
         Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
         // To count with Play market backstack, After pressing back button,
@@ -305,7 +295,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     }
 
 
-    public void closeDrawer(){
+    public void closeDrawer() {
         drawer.closeDrawers();
     }
 
@@ -314,22 +304,19 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     @Override
     public void onPageScrolled(int i, float v, int i1) {
 
-        if(i==0 && v==0)
-        {
+        if (i == 0 && v == 0) {
             rightArrow.setVisibility(View.VISIBLE);
             leftArrow.setVisibility(View.GONE);
         }
 
-        if (v>0 && v<1)
-        {
+        if (v > 0 && v < 1) {
             //rightArrow.setVisibility(View.GONE);
-            rightArrow.setAlpha(1-v);
+            rightArrow.setAlpha(1 - v);
             //leftArrow.setVisibility(View.GONE);
             leftArrow.setAlpha(v);
         }
 
-        if (i == 1 && v==0)
-        {
+        if (i == 1 && v == 0) {
             rightArrow.setVisibility(View.GONE);
             leftArrow.setVisibility(View.VISIBLE);
         }
@@ -352,21 +339,23 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     @Override
     public void onClick(View view) {
 
-        switch(view.getId())
-        {
+        switch (view.getId()) {
             case R.id.right_arrow:
-                viewPager.setCurrentItem(1,true);
+                viewPager.setCurrentItem(1, true);
                 break;
             case R.id.left_arrow:
-                viewPager.setCurrentItem(0,true);
+                viewPager.setCurrentItem(0, true);
                 break;
         }
 
     }
 
 
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        CommonUtils.removeSharedPreferences(this);
+    }
 
 }
 

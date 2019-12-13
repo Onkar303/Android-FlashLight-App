@@ -22,7 +22,9 @@ import com.example.androidflashlight.R;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
+import project.july2019.androidflashlight.Animations.ButtonAnimations;
 import project.july2019.androidflashlight.Utils.CircularSeekBar;
 import project.july2019.androidflashlight.Utils.CommonUtils;
 import project.july2019.androidflashlight.Utils.MyCustomTimer;
@@ -77,18 +79,28 @@ public class SOSScreen extends Fragment implements View.OnClickListener, Circula
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.sosbutton:
-                if (CommonUtils.getCameraStatus(getContext())) {
-                    try {
-                        sosThread.interrupt();
-                        CommonUtils.setCameraStatus(false,getContext());
-                    } catch (Exception e) {
-                        e.printStackTrace();
+
+                if(!CommonUtils.getFlashCameraStatus(getContext()))
+                {
+                    if (CommonUtils.getSosCameraStatus(getContext())) {
+                        try {
+                            sosThread.interrupt();
+                            CommonUtils.setSosCameraStatus(false,getContext());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        sosThread = new SOSThread(getActivity(), cameraManager);
+                        sosThread.start();
+                        CommonUtils.setSosCameraStatus(true,getContext());
                     }
-                } else {
-                    sosThread = new SOSThread(getActivity(), cameraManager);
-                    sosThread.start();
-                    CommonUtils.setCameraStatus(true,getContext());
                 }
+                else
+                {
+                    CommonUtils.endFlashAlertPopUp(getContext(),"Please disable Flash \n Disable Now ?","Attention!",cameraManager);
+                }
+
+
 
 
 //                    if(isEnabled)
@@ -126,7 +138,8 @@ public class SOSScreen extends Fragment implements View.OnClickListener, Circula
 
                 frequencyText.setText(String.valueOf((progress / 25)));
                 frequency = progress / 25;
-                sosThread.setFrequency(frequency);
+                CommonUtils.setCameraFrequency(getContext(),frequency);
+                sosThread.setFrequency(CommonUtils.getCameraFrequency(getContext()));
                 //Toast.makeText(getContext(), "tiggered", Toast.LENGTH_SHORT).show();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     vibrator.vibrate(VibrationEffect.createOneShot(70, VibrationEffect.DEFAULT_AMPLITUDE));
@@ -134,8 +147,6 @@ public class SOSScreen extends Fragment implements View.OnClickListener, Circula
                     vibrator.vibrate(70);
                 }
             }
-
-
         }catch (Exception e)
         {
             System.out.println("divide by 0 exception");

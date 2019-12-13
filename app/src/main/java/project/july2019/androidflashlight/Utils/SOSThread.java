@@ -16,6 +16,7 @@ public class SOSThread extends Thread {
     public SOSThread(Context context, CameraManager cameraManager) {
         this.context = context;
         this.cameraManager = cameraManager;
+        //this.frequency = CommonUtils.getCameraFrequency(context);
     }
 
     @Override
@@ -25,7 +26,12 @@ public class SOSThread extends Thread {
             try {
                     if(frequency == 0)
                     {
+
                         CommonUtils.enableCamera(context,cameraManager);
+                        if(isInterrupted())
+                        {
+                            throw new InterruptedException();
+                        }
                     }
                     else
                     {
@@ -40,7 +46,7 @@ public class SOSThread extends Thread {
                     }
 
 
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 CommonUtils.disableCamera(context,cameraManager);
                 if(isInterrupted())
                 {
@@ -70,6 +76,9 @@ public class SOSThread extends Thread {
         }
 
     }
+
+
+
 
 
 }

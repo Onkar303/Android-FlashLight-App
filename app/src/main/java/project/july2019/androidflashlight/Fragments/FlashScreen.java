@@ -85,26 +85,33 @@ public class FlashScreen extends Fragment implements View.OnClickListener{
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void doFlash() {
 
-        if (!CommonUtils.getCameraStatus(getContext())) {
-            try {
-                CommonUtils.enableCamera(getContext(),camManager);
-                rippleAnimation.start();
-                flash_status.setText("On");
-            } catch (Exception e) {
+        if(!CommonUtils.getSosCameraStatus(getContext()))
+        {
+            if (!CommonUtils.getFlashCameraStatus(getContext())) {
+                try {
+                    CommonUtils.enableCamera(getContext(),camManager);
+                    rippleAnimation.start();
+                    flash_status.setText("On");
+                } catch (Exception e) {
 
-                e.printStackTrace();
-            }
-            CommonUtils.setCameraStatus(true,getContext());
-        } else {
+                    e.printStackTrace();
+                }
+                CommonUtils.setFlashCameraStatus(true,getContext());
+            } else {
 
-            try {
-                CommonUtils.disableCamera(getContext(),camManager);
-                rippleAnimation.end();
-                flash_status.setText("Off");
-            } catch (Exception e) {
-                e.printStackTrace();
+                try {
+                    CommonUtils.disableCamera(getContext(),camManager);
+                    rippleAnimation.end();
+                    flash_status.setText("Off");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                CommonUtils.setFlashCameraStatus(false,getContext());
             }
-            CommonUtils.setCameraStatus(false,getContext());
+        }
+        else
+        {
+            CommonUtils.endSosAlertPopUp(getContext(),"Please disable SOS \n Disable Now ?","Attention!",camManager);
         }
 
     }
