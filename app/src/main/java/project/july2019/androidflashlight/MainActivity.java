@@ -65,9 +65,9 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         setContentView(R.layout.activity_main);
 
 
-        CommonUtils.setFullScreen(getWindow());
+//        CommonUtils.setFullScreen(getWindow());
         CommonUtils.setTranslucentNavigation(getWindow());
-        CommonUtils.setHidingNavigationBar(getWindow());
+//        CommonUtils.setHidingNavigationBar(getWindow());
 
 
         ActivityCompat.requestPermissions(MainActivity.this,
@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     @Override
     protected void onResume() {
         super.onResume();
-        CommonUtils.setHidingNavigationBar(getWindow());
+//        CommonUtils.setHidingNavigationBar(getWindow());
         for (int i = 0; i < navigationView.getMenu().size(); i++) {
             navigationView.getMenu().getItem(i).setChecked(false);
         }

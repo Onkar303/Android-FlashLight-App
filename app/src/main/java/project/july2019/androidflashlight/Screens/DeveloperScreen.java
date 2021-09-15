@@ -18,8 +18,9 @@ public class DeveloperScreen extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_developer_screen);
 
-        CommonUtils.setFullScreen(getWindow());
-        CommonUtils.setHidingNavigationBar(getWindow());
+//        CommonUtils.setFullScreen(getWindow());
+//        CommonUtils.setHidingNavigationBar(getWindow());
+        CommonUtils.setTranslucentNavigation(getWindow());
         init();
     }
 

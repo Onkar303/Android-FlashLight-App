@@ -143,21 +143,12 @@ public class SOSScreen extends Fragment implements View.OnClickListener, Circula
         {
             System.out.println("divide by 0 exception");
         }
-
-
-
     }
 
     @Override
-    public void onStopTrackingTouch(CircularSeekBar seekBar) {
-
-    }
+    public void onStopTrackingTouch(CircularSeekBar seekBar) { }
 
     @Override
-    public void onStartTrackingTouch(CircularSeekBar seekBar) {
-
-    }
-
-
+    public void onStartTrackingTouch(CircularSeekBar seekBar) { }
 
 }

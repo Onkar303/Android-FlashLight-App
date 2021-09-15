@@ -109,8 +109,10 @@ public class FlashScreen extends Fragment implements View.OnClickListener{
         {
             CommonUtils.endSosAlertPopUp(getContext(),"Please disable SOS \n Disable Now ?","Attention!",camManager);
         }
-
     }
+
+
+
 
 
 
