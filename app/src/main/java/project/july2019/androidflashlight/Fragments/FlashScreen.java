@@ -2,16 +2,15 @@ package project.july2019.androidflashlight.Fragments;
 
 import android.animation.AnimatorSet;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.hardware.camera2.CameraManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +20,6 @@ import com.example.androidflashlight.R;
 
 import project.july2019.androidflashlight.Animations.ButtonAnimations;
 import project.july2019.androidflashlight.Utils.CommonUtils;
-import project.july2019.androidflashlight.Utils.StringConstants;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class FlashScreen extends Fragment implements View.OnClickListener{
 

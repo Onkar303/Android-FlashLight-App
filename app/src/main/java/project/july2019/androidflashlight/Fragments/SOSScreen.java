@@ -4,30 +4,22 @@ import android.content.Context;
 import android.hardware.camera2.CameraManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.androidflashlight.R;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Objects;
-
-import project.july2019.androidflashlight.Animations.ButtonAnimations;
 import project.july2019.androidflashlight.Utils.CircularSeekBar;
 import project.july2019.androidflashlight.Utils.CommonUtils;
-import project.july2019.androidflashlight.Utils.MyCustomTimer;
 import project.july2019.androidflashlight.Utils.SOSThread;
 
 public class SOSScreen extends Fragment implements View.OnClickListener, CircularSeekBar.OnCircularSeekBarChangeListener {

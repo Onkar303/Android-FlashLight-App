@@ -8,8 +8,8 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.camera2.CameraManager;
 import android.os.Build;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.v7.app.AlertDialog;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -20,7 +20,6 @@ import android.widget.Toast;
 
 import com.example.androidflashlight.R;
 
-import project.july2019.androidflashlight.Animations.ButtonAnimations;
 import project.july2019.androidflashlight.MainActivity;
 
 import static android.content.Context.MODE_PRIVATE;

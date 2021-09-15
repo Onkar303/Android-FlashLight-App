@@ -4,7 +4,7 @@ package project.july2019.androidflashlight.Utils;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
-import android.support.v7.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatButton;
 import android.util.AttributeSet;
 
 public class CustomButton extends AppCompatButton {
